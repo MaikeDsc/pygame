@@ -91,8 +91,7 @@ while loop:
         bola1.movimento()
         bola2.draw()
         bola2.movimento()
-        #bola3.draw()
-        #bola3.movimento()
+       
         if time_atual - time_inicio_estado >= tempo_lancando:
             estado_atual = estado_obsoleto
             
@@ -102,7 +101,6 @@ while loop:
             #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
             bola1.rect.x = 900
             bola2.rect.x = 900
-            #bola3.rect.x = 900
     
     pygame.display.update()
 pygame.quit()
