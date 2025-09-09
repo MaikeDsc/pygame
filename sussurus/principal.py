@@ -20,6 +20,19 @@ fps = 60
 imagem_fundo = pygame.image.load('sussurus/imagens/fundo/selva2.png')
 imagem_fundo = pygame.transform.scale(imagem_fundo, (largura,altura))
 
+#posições em x  1 e 2 do Vilão
+vilao_posicao_1 = 780
+vilao_posicao_2 = 200
+#para usar no if  
+vilao_pos1 = 0
+vilao_pos2 = 1
+vilao_pos_atual = vilao_pos1
+
+#tempos do Vilão em cada posição ele começa na 1 
+tpos_vilao1 = 10000
+tpos_vilao2 = 8000
+
+time_inicio_posicao = pygame.time.get_ticks()
 
 #estados do curupira
 estado_obsoleto = 0
@@ -42,10 +55,10 @@ def desenhar_bg():
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-curupira = Vilao('curupira', 780, 475, 1.7, tela)
+curupira = Vilao('curupira', vilao_posicao_1, 475, 1.7, tela)
 
-bola1 = Projeteis('curupira',900, 300, 2.5, 13, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Projeteis('curupira',900, 500, 2.5, 13, tela )          
+bola1 = Projeteis('curupira',900, 300, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Projeteis('curupira',900, 500, 2.5, 10, tela )          
 
 
 
@@ -80,6 +93,10 @@ while loop:
 
     time_atual = pygame.time.get_ticks()
 
+    #if vilao_pos_atual == vilao_pos1 ------------------definir o teleport aqui 
+    
+
+
     if estado_atual == estado_obsoleto:
         if time_atual - time_inicio_estado >= tempo_obsoleto:
             estado_atual = estado_atacando
@@ -87,6 +104,7 @@ while loop:
             time_inicio_estado = time_atual
 
     if estado_atual == estado_atacando:
+        
         bola1.draw()
         bola1.movimento()
         bola2.draw()
