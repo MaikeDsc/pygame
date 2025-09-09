@@ -66,8 +66,10 @@ class Vilao(pygame.sprite.Sprite):
 #============================================================================================================
 
 class Projeteis(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, tela):
+    def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
         pygame.sprite.Sprite.__init__(self)
+        
+        self.velocidade = velocidade
         self.atualizar_time = pygame.time.get_ticks()
         self.nome_pasta = nome_pasta
         self.lista_animacoes = []
@@ -100,7 +102,7 @@ class Projeteis(pygame.sprite.Sprite):
                 self.indice_frame = 0
     
     def movimento(self):
-        self.rect.x -= 10
+        self.rect.x -= self.velocidade
 
     def draw(self):
         self.tela.blit(self.img ,self.rect)
