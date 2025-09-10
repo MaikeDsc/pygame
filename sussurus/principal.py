@@ -6,8 +6,8 @@ import pygame
 
 pygame.init()
 
-largura = 900
-altura = int(largura * 0.7)   
+largura = 1040
+altura = int(largura * 0.65)   
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('vilão')
 
@@ -21,16 +21,16 @@ imagem_fundo = pygame.image.load('sussurus/imagens/fundo/selva2.png')
 imagem_fundo = pygame.transform.scale(imagem_fundo, (largura,altura))
 
 #posições em x  1 e 2 do Vilão
-vilao_posicao_1 = 780
-vilao_posicao_2 = 200
+vilao_xposicao_1 = 800
+vilao_xposicao_2 = 20
 #para usar no if  
 vilao_pos1 = 0
 vilao_pos2 = 1
 vilao_pos_atual = vilao_pos1
-
 #tempos do Vilão em cada posição ele começa na 1 
-tpos_vilao1 = 10000
-tpos_vilao2 = 8000
+
+tpos_vilao1 = 30000
+tpos_vilao2 = 20000
 
 time_inicio_posicao = pygame.time.get_ticks()
 
@@ -55,10 +55,10 @@ def desenhar_bg():
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-curupira = Vilao('curupira', vilao_posicao_1, 475, 1.7, tela)
+curupira = Vilao('curupira', 900, 513, 1.7, tela)
 
-bola1 = Projeteis('curupira',900, 300, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Projeteis('curupira',900, 500, 2.5, 10, tela )          
+bola1 = Projeteis('curupira',1050, 300, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Projeteis('curupira',1050, 500, 2.5, 10, tela )          
 
 
 
@@ -74,7 +74,7 @@ while loop:
     curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
     bola1.atualizar_animacao()
     bola2.atualizar_animacao()
-    #bola3.atualizar_animacao()
+    
     
     curupira.draw()                       #desenhar as imagem com o metodo draw
    
@@ -93,8 +93,19 @@ while loop:
 
     time_atual = pygame.time.get_ticks()
 
-    #if vilao_pos_atual == vilao_pos1 ------------------definir o teleport aqui 
+    if vilao_pos_atual == vilao_pos1: #------------------definir o teleport aqui 
+        if time_atual - time_inicio_posicao >= tpos_vilao1:
+            
+            curupira.rect.x = vilao_xposicao_2
+            vilao_pos_atual = vilao_pos2
+            time_inicio_posicao = time_atual
     
+    if vilao_pos_atual == vilao_pos2:
+        if time_atual - time_inicio_posicao >= tpos_vilao2:
+           
+            curupira.rect.x = vilao_xposicao_1
+            vilao_pos_atual = vilao_pos1
+            time_inicio_posicao = time_atual
 
 
     if estado_atual == estado_obsoleto:
@@ -117,8 +128,8 @@ while loop:
             time_inicio_estado = time_atual
 
             #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
-            bola1.rect.x = 900
-            bola2.rect.x = 900
+            bola1.rect.x = 1050
+            bola2.rect.x = 1050
     
     pygame.display.update()
 pygame.quit()
