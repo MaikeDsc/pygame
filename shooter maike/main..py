@@ -74,7 +74,7 @@ class Soldado(pygame.sprite.Sprite):
 
     def atualizar_animacao(self):
         #atualizando animação
-        INTERVALO_ANIMACAO = 110                         # é o cooldown de uma animaçaõ para outra, é uma constante
+        INTERVALO_ANIMACAO = 110                       # é o cooldown de uma animaçaõ para outra, é uma constante
         #atualizando o frame independente da frame tual 
         self.img = self.lista_animacoes[self.acao][self.indice_frame]
 
@@ -101,7 +101,7 @@ class Soldado(pygame.sprite.Sprite):
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-player = Soldado('jogador', 200, 400, 1.5, 5)
+player = Soldado('jogador', 100, 200, 3, 5)
 
 inimigo = Soldado('inimigo2', 500, 400, 2, 5)
 
