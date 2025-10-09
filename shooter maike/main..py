@@ -101,7 +101,7 @@ class Soldado(pygame.sprite.Sprite):
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-player = Soldado('jogador', 100, 200, 3, 5)
+player = Soldado('jogador', 100, 200, 1.5, 10)
 
 inimigo = Soldado('inimigo2', 500, 400, 2, 5)
 

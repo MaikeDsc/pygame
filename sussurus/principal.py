@@ -57,8 +57,10 @@ def desenhar_bg():
 #define a instancia player 
 curupira = Vilao('curupira', 900, 513, 1.7, tela)
 
-bola1 = Projeteis('curupira',1050, 300, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Projeteis('curupira',1050, 500, 2.5, 10, tela )          
+bola1 = Projeteis('curupira', 'bola_de_fogo',1050, 400, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Projeteis('curupira', 'bola_de_fogo',1050, 550, 2.5, 10, tela )
+
+rato1 = Projeteis('curupira', 'rato',1050, 595, 0.5, 2, tela  )         
 
 
 
@@ -74,10 +76,14 @@ while loop:
     curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
     bola1.atualizar_animacao()
     bola2.atualizar_animacao()
-    
+
+    rato1.atualizar_animacao()
+  
     
     curupira.draw()                       #desenhar as imagem com o metodo draw
    
+    rato1.draw()
+    rato1.movimento()
     
 
     for event in pygame.event.get():
