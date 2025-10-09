@@ -1,6 +1,6 @@
 import pygame
 from vilao import Vilao
-from vilao import Projeteis
+from projeteis import Projeteis
 
 import pygame
 
@@ -61,9 +61,6 @@ bola1 = Projeteis('bola_de_fogo',1050, 400, 2.5, 10, tela )              #parame
 bola2 = Projeteis('bola_de_fogo',1050, 550, 2.5, 10, tela )
 
 rato1 = Projeteis('rato',1050, 598, 0.5, 1, tela  )         
-
-
-
 
 
 loop = True
