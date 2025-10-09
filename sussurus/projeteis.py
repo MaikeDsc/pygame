@@ -25,7 +25,7 @@ class Projeteis(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
     def atualizar_animacao(self):
-            #atualizando animação
+            
             INTERVALO_ANIMACAO = 200         # é o cooldown de uma animaçaõ para outra
             #atualizando o frame independente da frame tual 
             self.img = self.lista_animacoes[self.indice_frame]
