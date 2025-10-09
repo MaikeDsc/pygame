@@ -66,10 +66,9 @@ class Vilao(pygame.sprite.Sprite):
 #============================================================================================================
 
 class Projeteis(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, nome_subpasta, x, y, escala, velocidade, tela):
+    def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
         pygame.sprite.Sprite.__init__(self)
         
-        self.nome_subpasta = nome_subpasta
         self.velocidade = velocidade
         self.atualizar_time = pygame.time.get_ticks()
         self.nome_pasta = nome_pasta
@@ -79,7 +78,7 @@ class Projeteis(pygame.sprite.Sprite):
         self.tela = tela
 
         for c in range (3):
-            imagem = pygame.image.load(f'sussurus/imagens/{self.nome_pasta}/{self.nome_subpasta}/{c}.png')
+            imagem = pygame.image.load(f'sussurus/imagens/projeteis/{self.nome_pasta}/{c}.png')
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)
 

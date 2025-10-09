@@ -57,10 +57,10 @@ def desenhar_bg():
 #define a instancia player 
 curupira = Vilao('curupira', 900, 513, 1.7, tela)
 
-bola1 = Projeteis('curupira', 'bola_de_fogo',1050, 400, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Projeteis('curupira', 'bola_de_fogo',1050, 550, 2.5, 10, tela )
+bola1 = Projeteis('bola_de_fogo',1050, 400, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Projeteis('bola_de_fogo',1050, 550, 2.5, 10, tela )
 
-rato1 = Projeteis('curupira', 'rato',1050, 595, 0.5, 2, tela  )         
+rato1 = Projeteis('rato',1050, 598, 0.5, 1, tela  )         
 
 
 
