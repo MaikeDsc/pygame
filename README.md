@@ -1,4 +1,6 @@
-blabla
+
+##Comandos git 
+
 git init
 -> inicializar o GIT
 
