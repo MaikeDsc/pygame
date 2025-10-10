@@ -2,34 +2,37 @@
 # 🌿 Sussurros da Selva
 
 🎮 **Sussurros da Selva** é um jogo 2D de ação e aventura inspirado em clássicos como **Cuphead** e **Hollow Knight**.  
-O jogador embarca em uma jornada pela misteriosa selva ancestral, enfrentando **chefes desafiadores**, desvendando **segredos ocultos** e provando sua coragem em meio a criaturas sombrias e sussurros da floresta.
+O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **chefes desafiadores** e provando sua coragem em meio a criaturas sombrias e sussurros da floresta.
 
 ---
 
 ## 🐍 Enredo
 
 Em uma selva esquecida pelo tempo, ecos de antigas civilizações ainda ressoam.  
-Você é **Aru**, um explorador que desperta em meio a ruínas cobertas pela vegetação.  
-Sua missão é sobreviver às **três grandes entidades guardiãs** — cada uma representando um aspecto da natureza — e restaurar o equilíbrio perdido da selva.
+Você é **Aranã**, um guardião que desperta em meio a selva para evitar a alatração de um mau maior.  
+Sua missão é sobreviver às **três grandes lendas do folclore que estão corrompidas** — cada uma representando um aspecto da natureza — e restaurar o equilíbrio perdido da selva.
 
 ---
 
 ## ⚔️ Jogabilidade
 
-- 🌲 **Três fases principais**, cada uma com um **boss único** e um **tema ambiental** (floresta, ruínas e abismo).  
-- 🌀 **Sistema de combate dinâmico**, com ataques corpo a corpo e habilidades especiais.  
+- 🌲 **Três fases principais**, cada uma com um **boss único** e um **tema florestal**.  
+- 🌀 **Sistema de combate dinâmico**, com ataques a distância e habilidades especiais.  
 - 🦋 **Estilo artístico desenhado à mão**, remetendo a animações retrô.  
-- 💀 **Dificuldade desafiadora**, exigindo reflexos e estratégia.
+- 💀 **Dificuldade desafiadora**, exigindo reflexos e estratégia para sobreviver.
 
 ---
 
-## 🧩 Estrutura do Projeto
+## 🧩 Estrutura do Projeto e que deve ser seguida 
+
+SussurrosDaSelva/
 
 
 
 
 
-#Comandos git 
+
+## Comandos basicos do git  
 
 git init
 -> inicializar o GIT
