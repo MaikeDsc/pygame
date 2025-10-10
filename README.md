@@ -25,10 +25,30 @@ Sua missão é sobreviver às **três grandes lendas do folclore que estão corr
 
 ## 🧩 Estrutura do Projeto e que deve ser seguida 
 
+**seguir esse padrão e ir atualizando aqui**
+
 SussurrosDaSelva/
-
-
-
+│── principal.py
+│── projeteis.py
+│── vilao.py
+│── 
+│──
+│──
+├── imagens/
+│ ├── arana/
+│ │ ├── arana_correndo
+│ │ ├── arana_pulando
+│ │ └── arana_atacando
+│ ├── curupira/
+│ │ ├── lancar_magia
+│ │ └── obsoletp
+│ ├──fundo/
+│ ├──projeteis/
+│ │ ├──bola_de_fogo
+│ │ └──rato
+│ 
+├── README.md
+└── git e github.txt
 
 
 
