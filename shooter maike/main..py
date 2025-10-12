@@ -2,10 +2,14 @@ import pygame
 
 pygame.init()
 
-largura = 700
-altura = int(largura * 0.8)    # o valor da altura é ajustavel a largura 
+largura = 1000
+altura = int(largura * 0.7)    # o valor da altura é ajustavel a largura 
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('teste shooter')
+
+imagem_fundo = pygame.image.load('sussurus/imagens/fundo/selva2.png')
+imagem_fundo = pygame.transform.scale(imagem_fundo, (largura,altura))
+
 
 #taxas de quadro (frame rate)
 relogio = pygame.time.Clock()
@@ -16,13 +20,14 @@ mover_esquerda = False
 mover_direita = False
 
 #definindo uma cor para o backgrownd
-bg = (31, 31, 51)
+
 
 #--------------------------------------------------------------------------------
 
 #função para desenhar o fundo
 def desenhar_bg():
-    tela.fill(bg)
+    
+    tela.blit(imagem_fundo, (0,0))
 
 class Soldado(pygame.sprite.Sprite):
     def __init__(self, nome_pasta, x, y, escala, speed):        #speed define a velocidade para cada intancia dessa classe por pixel a cada loop
@@ -101,9 +106,9 @@ class Soldado(pygame.sprite.Sprite):
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-player = Soldado('jogador', 100, 200, 1.5, 10)
+player = Soldado('arana', 100, 575, 2, 7)
 
-inimigo = Soldado('inimigo2', 500, 400, 2, 5)
+#inimigo = Soldado('inimigo2', 500, 400, 2, 5)
 
 
 
@@ -118,7 +123,7 @@ while loop:
    
     player.draw()                       #desenhar as imagem com o metodo draw
 
-    inimigo.draw()
+    #inimigo.draw()
     
     
     
