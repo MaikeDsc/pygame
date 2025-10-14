@@ -9,13 +9,13 @@ O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **
 ## ⚔️ Desenvolvedores
 
 -👾**Deyvison Rolim Sousa** 
-<br></br>
--👾**Maquiavel dos Santos Campos** https://github.com/MaikeDsc
-<br></br>
+<br>
+-👾 **Maquiavel dos Santos Campos** https://github.com/MaikeDsc
+<br>
 -👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck
-</br></br>
+</br>
 -👾**Luiz Guilherme Barreto**
-<br></br>
+
 
 ## 🐍 Enredo
 
