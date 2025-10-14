@@ -1,0 +1,258 @@
+import pygame
+from pygame.locals import *
+from sys import exit
+from BALAS import *
+from ARANA import *
+from VILAO import *
+
+pygame.init()
+
+
+largura = 1024
+altura = 768
+tela = pygame.display.set_mode((largura,altura))
+pygame.display.set_caption("Sussuros da Selva")
+
+cenario_fase1 = pygame.image.load("sussurus/cenario.jpg")
+cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
+
+#parte sonora
+
+menu_sound = pygame.mixer.music.load("sussurus/musica e sons/menu_sound.mp3")
+pygame.mixer.music.play(-1)
+
+laser = pygame.mixer.Sound("sussurus/musica e sons/laser.wav")
+laser.set_volume(0.2)
+
+
+#taxas de quadro (frame rate)
+relogio = pygame.time.Clock()
+
+#posições em x  1 e 2 do Vilão
+vilao_xposicao_1 = 800
+vilao_xposicao_2 = 20
+
+#para usar no if  
+vilao_pos1 = 0
+vilao_pos2 = 1
+vilao_pos_atual = vilao_pos1
+#tempos do Vilão em cada posição ele começa na 1 
+
+tpos_vilao1 = 30000
+tpos_vilao2 = 20000
+
+time_inicio_posicao = pygame.time.get_ticks()
+
+#estados do curupira
+estado_obsoleto = 0
+estado_atacando = 1
+estado_atual= estado_obsoleto
+#setando os tempo dos ataques 
+tempo_obsoleto = 3000    #em milisegundos pq o relogio só conta em milisegundos
+tempo_lancando = 2400
+
+time_inicio_estado = pygame.time.get_ticks()
+  
+#--------------------------------------------------------------------------------
+
+#define a instancia player 
+
+chao_Y = 600
+
+x_arana = 100
+y_arana = 500
+
+x_curupira = 900
+y_curupira = 490
+
+curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
+
+arana = Arana(x_arana,y_arana,chao_Y,largura)
+
+# bola1 = Projeteis('bola_de_fogo',1050, 400, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+# bola2 = Projeteis('bola_de_fogo',1050, 550, 2.5, 10, tela )
+
+# rato1 = Projeteis('rato',1100, 598, 0.5, 1, tela  )         
+
+# capivara = Projeteis('capivara', 1100, 580, 3, 4, tela)
+
+
+#-----------------------------------------------------------------------------
+
+projeteis = []
+
+clock = pygame.time.Clock()
+
+fonte_menu = pygame.font.Font("sussurus/PressStart2P.ttf", 35)
+BRANCO = (255,255,255)
+PRETO = (0,0,0)
+
+def desenhar_texto(texto,fonte,cor,y):
+    img = fonte.render(texto,True,cor)
+    x = (largura - img.get_width()) // 2
+    tela.blit(img,(x,y))
+
+estado = "menu"
+tempo_total = 90
+
+while True:
+    if estado == "menu":
+
+        tela.fill(PRETO)
+
+        desenhar_texto("SUSSUROS DA SELVA",fonte_menu, BRANCO, 200)
+        desenhar_texto("Pressione ENTER para jogar", fonte_menu, BRANCO, 400)
+        desenhar_texto("Pressione ESC para sair", fonte_menu, BRANCO, 500)
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.QUIT()
+                exit()
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN:
+                    pygame.mixer.music.stop()
+                    pygame.mixer.music.load("sussurus/musica e sons/trilha sonora fase 1.mp3")
+                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.play(-1)
+                    tempo_fase1 = pygame.time.get_ticks()
+                    estado = "fase 1"
+                if event.key == K_ESCAPE:
+                    pygame.QUIT()
+                    exit()
+
+                    
+    elif estado == "fase 1":
+
+        clock.tick(60)
+        tela.blit(cenario_fase1, (0,0))
+
+        tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
+
+        tempo_restante = max(0, tempo_total - tempo_decorrido)
+        
+        minutos = int(tempo_restante // 60)
+        segundos = int(tempo_restante % 60)
+        texto_tempo = f"{minutos:02d}:{segundos:02d}"
+
+        fonte_cronometro = pygame.font.Font("sussurus/PressStart2P.ttf", 35)
+        texto_cronometro = fonte_cronometro.render(texto_tempo, True, (255,255,255))
+        tela.blit(texto_cronometro, (600, 110))
+
+        if tempo_restante <= 0:
+            estado = "game over"
+
+        #movimentos do jogo aqui embaixo
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            if event.type == KEYDOWN:
+                if event.key == K_o:
+                    laser.play()
+                    nova_bala = Balas(arana.rect.right, arana.rect.centery, arana.direcao,tela)
+                    projeteis.append(nova_bala)
+        
+        teclas = pygame.key.get_pressed()
+        arana.movimento(teclas)
+
+        #personagens e ataques
+        
+        #relogio.tick(fps)
+
+        curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
+        #bola1.atualizar_animacao()
+        #bola2.atualizar_animacao()
+
+        #rato1.atualizar_animacao()
+        #capivara.atualizar_animacao()
+    
+        curupira.draw()                       #desenhar as imagem com o metodo draw
+    
+        #rato1.draw()
+        #rato1.movimento()
+
+        #capivara.draw()
+        #capivara.movimento()
+        
+        time_atual = pygame.time.get_ticks()
+
+        if vilao_pos_atual == vilao_pos1: #------------------definir o teleport aqui 
+            if time_atual - time_inicio_posicao >= tpos_vilao1:
+                
+                curupira.rect.x = vilao_xposicao_2
+                vilao_pos_atual = vilao_pos2
+                time_inicio_posicao = time_atual
+        
+        if vilao_pos_atual == vilao_pos2:
+            if time_atual - time_inicio_posicao >= tpos_vilao2:
+            
+                curupira.rect.x = vilao_xposicao_1
+                vilao_pos_atual = vilao_pos1
+                time_inicio_posicao = time_atual
+
+
+        if estado_atual == estado_obsoleto:
+            if time_atual - time_inicio_estado >= tempo_obsoleto:
+                estado_atual = estado_atacando
+                curupira.atualizar_acoes(1)
+                time_inicio_estado = time_atual
+
+        if estado_atual == estado_atacando:
+            
+            # bola1.draw()
+            # bola1.movimento()
+            # bola2.draw()
+            # bola2.movimento()
+        
+            if time_atual - time_inicio_estado >= tempo_lancando:
+                estado_atual = estado_obsoleto
+                
+                curupira.atualizar_acoes(0)
+                time_inicio_estado = time_atual
+
+                #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
+                # bola1.rect.x = 1050
+                # bola2.rect.x = 1050
+
+        arana.atualizar()
+        arana.desenhar(tela)
+
+        for bala in projeteis:
+            bala.atualizar()
+            bala.desenhar()
+
+            if bala.rect.x > largura or bala.rect.x < 0:
+                projeteis.remove(bala)
+            elif curupira.vivo and bala.rect.colliderect(curupira.rect):
+                curupira.tomar_dano()
+                projeteis.remove(bala)
+
+        pygame.display.flip()
+
+#-------------------------------------------------------------------------------------------------
+
+    elif estado == "game over":
+        fonte_titulo = pygame.font.Font("sussurus/PressStart2P.ttf", 50)
+        fonte_texto = pygame.font.Font("sussurus/PressStart2P.ttf", 20)
+
+        texto_game_over = fonte_titulo.render("GAME OVER", True, (255,0,0) )
+        texto_voltar = fonte_texto.render("Toque em qualquer botao para voltar ao menu", True, BRANCO)
+
+        tela.fill(PRETO)
+
+        tela.blit(texto_game_over, (largura//2 - texto_game_over.get_width()//2, altura//3))
+        tela.blit(texto_voltar, (largura//2 - texto_voltar.get_width()//2, altura//2))
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            if event.type == KEYDOWN:
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("sussurus/musica e sons/menu_sound.mp3")
+                pygame.mixer.music.play(-1)
+                estado = "menu"

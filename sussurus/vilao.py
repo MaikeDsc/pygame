@@ -1,8 +1,11 @@
 import pygame
 
-
 class Vilao(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, tela):
+    def __init__(self, nome_pasta, x, y, escala, tela, vida = 100):
+        self.vida = vida
+        self.vivo = True
+
+
         pygame.sprite.Sprite.__init__(self)
 
         self.atualizar_time = pygame.time.get_ticks()
@@ -59,6 +62,14 @@ class Vilao(pygame.sprite.Sprite):
             self.atualizar_time = pygame.time.get_ticks()                   #atualiza o relogio de transição de frames tbm
     
     def draw(self):
-        self.tela.blit(self.img ,self.rect)
+        if self.vivo == True:
+            self.tela.blit(self.img ,self.rect)
+
+    def tomar_dano(self, dano = 1):
+        if self.vivo:
+            self.vida -= dano
+            if self.vida <= 0:
+                self.vida = 0
+                self.vivo = False
 
 #============================================================================================================
