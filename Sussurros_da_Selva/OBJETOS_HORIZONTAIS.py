@@ -3,10 +3,12 @@ import pygame
 # essa clase é destinada a tudo, que não seja o jogador e que percorre a tela de um lado a outro
 #Como: Bolas de fogo, inimigos rastejantes e voadores outras magias dos bosses
 
-class Projeteis(pygame.sprite.Sprite):
+class Inimigos(pygame.sprite.Sprite):
     def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
         pygame.sprite.Sprite.__init__(self)
         
+        self.giro = False
+        self.direcao = 0
         self.velocidade = velocidade
         self.atualizar_time = pygame.time.get_ticks()
         self.nome_pasta = nome_pasta
@@ -39,8 +41,16 @@ class Projeteis(pygame.sprite.Sprite):
             if self.indice_frame >= len(self.lista_animacoes):
                 self.indice_frame = 0
     
-    def movimento(self):
-        self.rect.x -= self.velocidade
+    def movimento(self, direcao): # direção é 1 ou 0 
+        
+        
+        if direcao != self.direcao:                 #movimento da esquerda para direita
+            self.rect.x += self.velocidade
+        
+        else:
+            self.rect.x -= self.velocidade          #movimento da direita para esquerda 
 
     def draw(self):
-        self.tela.blit(self.img ,self.rect)
+        #self.tela.blit(self.img ,self.rect)
+        self.tela.blit(pygame.transform.flip(self.img, self.giro, False) ,self.rect)
+

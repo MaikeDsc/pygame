@@ -2,12 +2,11 @@ import pygame
 
 class Vilao(pygame.sprite.Sprite):
     def __init__(self, nome_pasta, x, y, escala, tela, vida = 100):
+        
+        pygame.sprite.Sprite.__init__(self)
         self.vida = vida
         self.vivo = True
-
-
-        pygame.sprite.Sprite.__init__(self)
-
+        self.giro = False
         self.atualizar_time = pygame.time.get_ticks()
         self.nome_pasta = nome_pasta
         self.lista_animacoes = []
@@ -63,7 +62,8 @@ class Vilao(pygame.sprite.Sprite):
     
     def draw(self):
         if self.vivo == True:
-            self.tela.blit(self.img ,self.rect)
+            #self.tela.blit(self.img ,self.rect)
+            self.tela.blit(pygame.transform.flip(self.img, self.giro, False) ,self.rect)
 
     def tomar_dano(self, dano = 1):
         if self.vivo:
