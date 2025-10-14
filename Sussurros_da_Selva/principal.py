@@ -1,5 +1,5 @@
 import pygame
-from vilao import Vilao
+from VILAO import Vilao
 from projeteis import Projeteis
 
 import pygame
@@ -17,7 +17,7 @@ fps = 60
 
 
 #carregando u a imagem para o bg
-imagem_fundo = pygame.image.load('sussurus/imagens/fundo/selva2.png')
+imagem_fundo = pygame.image.load('Sussurros_da_Selva/imagens/fundo/selva2.png')
 imagem_fundo = pygame.transform.scale(imagem_fundo, (largura,altura))
 
 #posições em x  1 e 2 do Vilão

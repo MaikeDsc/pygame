@@ -13,15 +13,15 @@ altura = 768
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load("sussurus/cenario.jpg")
+cenario_fase1 = pygame.image.load("Sussurros_da_Selva/cenario.jpg")
 cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
 
 #parte sonora
 
-menu_sound = pygame.mixer.music.load("sussurus/musica e sons/menu_sound.mp3")
+menu_sound = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
 pygame.mixer.music.play(-1)
 
-laser = pygame.mixer.Sound("sussurus/musica e sons/laser.wav")
+laser = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/laser.wav")
 laser.set_volume(0.2)
 
 
@@ -83,7 +83,7 @@ projeteis = []
 
 clock = pygame.time.Clock()
 
-fonte_menu = pygame.font.Font("sussurus/PressStart2P.ttf", 35)
+fonte_menu = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 35)
 BRANCO = (255,255,255)
 PRETO = (0,0,0)
 
@@ -113,7 +113,7 @@ while True:
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
                     pygame.mixer.music.stop()
-                    pygame.mixer.music.load("sussurus/musica e sons/trilha sonora fase 1.mp3")
+                    pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/trilha sonora fase 1.mp3")
                     pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.play(-1)
                     tempo_fase1 = pygame.time.get_ticks()
@@ -136,7 +136,7 @@ while True:
         segundos = int(tempo_restante % 60)
         texto_tempo = f"{minutos:02d}:{segundos:02d}"
 
-        fonte_cronometro = pygame.font.Font("sussurus/PressStart2P.ttf", 35)
+        fonte_cronometro = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 35)
         texto_cronometro = fonte_cronometro.render(texto_tempo, True, (255,255,255))
         tela.blit(texto_cronometro, (600, 110))
 
@@ -234,8 +234,8 @@ while True:
 #-------------------------------------------------------------------------------------------------
 
     elif estado == "game over":
-        fonte_titulo = pygame.font.Font("sussurus/PressStart2P.ttf", 50)
-        fonte_texto = pygame.font.Font("sussurus/PressStart2P.ttf", 20)
+        fonte_titulo = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 50)
+        fonte_texto = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 20)
 
         texto_game_over = fonte_titulo.render("GAME OVER", True, (255,0,0) )
         texto_voltar = fonte_texto.render("Toque em qualquer botao para voltar ao menu", True, BRANCO)
@@ -253,6 +253,6 @@ while True:
                 exit()
             if event.type == KEYDOWN:
                 pygame.mixer.music.stop()
-                pygame.mixer.music.load("sussurus/musica e sons/menu_sound.mp3")
+                pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
                 pygame.mixer.music.play(-1)
                 estado = "menu"

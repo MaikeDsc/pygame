@@ -19,7 +19,7 @@ class Vilao(pygame.sprite.Sprite):
         #sprites obsoleto
         lista_temporaria = []
         for c in range (3):
-            imagem = pygame.image.load(f'sussurus/imagens/{self.nome_pasta}/obsoleto/{c}.png')
+            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/{self.nome_pasta}/obsoleto/{c}.png')
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
@@ -27,7 +27,7 @@ class Vilao(pygame.sprite.Sprite):
         #sprites dele lancando magia 
         lista_temporaria = []
         for c in range (4):
-            imagem = pygame.image.load(f'sussurus/imagens/{self.nome_pasta}/lancar_magia/{c}.png')
+            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/{self.nome_pasta}/lancar_magia/{c}.png')
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)

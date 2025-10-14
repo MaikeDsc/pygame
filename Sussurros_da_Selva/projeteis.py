@@ -16,7 +16,7 @@ class Projeteis(pygame.sprite.Sprite):
         self.tela = tela
 
         for c in range (3):
-            imagem = pygame.image.load(f'sussurus/imagens/projeteis/{self.nome_pasta}/{c}.png')
+            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/projeteis/{self.nome_pasta}/{c}.png')
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)
 
