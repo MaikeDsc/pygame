@@ -6,6 +6,13 @@ O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **
 
 ---
 
+## ⚔️ Desenvolvedores
+
+-👾**Deyvison Rolim Sousa**   
+-👾**Maquiavel dos Santos Campos** https://github.com/MaikeDsc
+-👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck
+-👾**Luiz Guilherme Barreto**
+
 ## 🐍 Enredo
 
 Em uma selva esquecida pelo tempo, ecos de antigas civilizações ainda ressoam.  
@@ -23,33 +30,12 @@ Sua missão é sobreviver às **três grandes lendas do folclore que estão corr
 
 ---
 
-## 🧩 Estrutura do Projeto e que deve ser seguida 
+## ⚔️ Sobre a pasta Shooter Maike
 
-**seguir esse padrão e ir atualizando aqui**
+- 🔫 **Foi um estudo previo** na qual foi trabalhado algumas mecanicas de gameplay durante a aprendizagem sobre o pygame, tais mecanicas podem ser testasdas ou usadas para o projeto Sussuros da Salva, o codigo da pasta shooter pode ser alterado livremente para testes ou visualizações rapidas.  
 
-SussurrosDaSelva/
-│── principal.py
-│── projeteis.py
-│── vilao.py
-│── 
-│──
-│──
-├── imagens/
-│ ├── arana/
-│ │ ├── arana_correndo
-│ │ ├── arana_pulando
-│ │ └── arana_atacando
-│ ├── curupira/
-│ │ ├── lancar_magia
-│ │ └── obsoletp
-│ ├──fundo/
-│ ├──projeteis/
-│ │ ├──bola_de_fogo
-│ │ └──rato
-│ 
-├── README.md
-└── git e github.txt
 
+---
 
 
 ## Comandos basicos do git  
@@ -106,3 +92,11 @@ git pull origin main
 
 git reset --hard <hash_do_commit_anterior>
 -> apaga um commit
+
+git pull --rebase origin master
+(ja faz o trabalho do pull e fetch)
+
+vai atualizar o teu repositório local, caso eu ja tenha mexido algo.
+basta esse. depois pode dar add e commit
+(mas por cautela pode executar esse de --rebase novamente antes de dar push)
+
