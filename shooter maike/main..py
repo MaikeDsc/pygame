@@ -7,7 +7,7 @@ altura = int(largura * 0.7)    # o valor da altura é ajustavel a largura
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('teste shooter')
 
-imagem_fundo = pygame.image.load('sussurus/imagens/fundo/selva2.png')
+imagem_fundo = pygame.image.load('Shooter maike/imagens/selva2.png')
 imagem_fundo = pygame.transform.scale(imagem_fundo, (largura,altura))
 
 
@@ -106,7 +106,7 @@ class Soldado(pygame.sprite.Sprite):
 #--------------------------------------------------------------------------------
 
 #define a instancia player 
-player = Soldado('arana', 100, 575, 2, 7)
+player = Soldado('arana', 100, 577, 1.7, 7)
 
 #inimigo = Soldado('inimigo2', 500, 400, 2, 5)
 
