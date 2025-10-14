@@ -8,15 +8,14 @@ O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **
 
 ## ⚔️ Desenvolvedores
 
--👾**Deyvison Rolim Sousa** 
-<br>
--👾 **Maquiavel dos Santos Campos** https://github.com/MaikeDsc
-<br>
--👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck
-</br>
--👾**Luiz Guilherme Barreto**
-
-
+<body>
+    <ul>
+        <li>-👾**Deyvison Rolim Sousa**</li>  
+        <li>-👾**Maquiavel dos Santos Campos** https://github.com/MaikeDsc</li>
+        <li>-👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck</li>
+        <li>-👾**Luiz Guilherme Barreto**</li>
+    </ul>
+</body>
 ## 🐍 Enredo
 
 Em uma selva esquecida pelo tempo, ecos de antigas civilizações ainda ressoam.  
