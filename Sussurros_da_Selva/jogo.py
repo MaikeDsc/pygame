@@ -64,7 +64,7 @@ x_arana = 100
 y_arana = 500
 
 x_curupira = 900
-y_curupira = 525
+y_curupira = 518
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
