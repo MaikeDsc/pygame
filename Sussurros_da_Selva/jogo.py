@@ -14,7 +14,7 @@ altura = 760
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load("Sussurros_da_Selva/cenario.jpg")
+cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
 cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
 
 #parte sonora
@@ -64,14 +64,14 @@ x_arana = 100
 y_arana = 500
 
 x_curupira = 900
-y_curupira = 490
+y_curupira = 558
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Inimigos('bola_de_fogo',1050, 400, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-# bola2 = Inimigos('bola_de_fogo',1050, 550, 2.5, 10, tela )
+bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Inimigos('bola_de_fogo',1050, 550, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
@@ -160,12 +160,10 @@ while True:
         arana.movimento(teclas)
 
         #personagens e ataques
-        
-        #relogio.tick(fps)
 
         curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
         bola1.atualizar_animacao()
-        #bola2.atualizar_animacao()
+        bola2.atualizar_animacao()
 
         #rato1.atualizar_animacao()
         #capivara.atualizar_animacao()
@@ -202,11 +200,13 @@ while True:
                 time_inicio_estado = time_atual
 
         if estado_atual == estado_atacando:
-            if vilao_pos_atual == vilao_pos1:
+            if vilao_pos_atual == vilao_pos1 and curupira.vivo == True:
+                bola1.giro = False
+                bola2.giro = False
                 bola1.draw()
                 bola1.movimento(0)
-                # bola2.draw()
-                # bola2.movimento()
+                bola2.draw()
+                bola2.movimento(0)
             
                 if time_atual - time_inicio_estado >= tempo_lancando:
                     estado_atual = estado_obsoleto
@@ -215,23 +215,25 @@ while True:
 
                     #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
                     bola1.rect.x = 1050
-                    # bola2.rect.x = 1050
+                    bola2.rect.x = 1050
             
-            if vilao_pos_atual == vilao_pos2:
+            if vilao_pos_atual == vilao_pos2 and curupira.vivo == True:
                 bola1.giro = True
+                bola2.giro = True
                 bola1.draw()
                 bola1.movimento(1)
-                # bola2.draw()
-                # bola2.movimento()
+                bola2.draw()
+                bola2.movimento(1)
             
                 if time_atual - time_inicio_estado >= tempo_lancando:
                     estado_atual = estado_obsoleto
                     curupira.atualizar_acoes(0)
                     time_inicio_estado = time_atual
 
-                    #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
+                    #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
                     bola1.rect.x = -100
-                    # bola2.rect.x = 1050
+                    bola2.rect.x = -100
+            
 
         arana.atualizar()
         arana.desenhar(tela)
