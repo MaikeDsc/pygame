@@ -5,7 +5,7 @@ class Arana:
     def __init__(self,x,y,chao_Y,largura):
         self.largura = largura
         self.chao_Y = chao_Y
-        self.rect = pygame.Rect(x,y,40,100)
+        self.rect = pygame.Rect(x,y,40,80)
         self.velocidade_x = 6
         self.velocidade_y = 0
         self.gravidade = 1

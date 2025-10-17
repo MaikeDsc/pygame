@@ -9,8 +9,8 @@ from OBJETOS_HORIZONTAIS import *
 pygame.init()
 
 
-largura = 1024
-altura = 760
+largura = 1080
+altura = 720
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
@@ -71,7 +71,7 @@ curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
 bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Inimigos('bola_de_fogo',1050, 550, 2.5, 10, tela )
+bola2 = Inimigos('bola_de_fogo',1050, 600, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
@@ -109,7 +109,7 @@ while True:
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                pygame.QUIT()
+                
                 exit()
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
@@ -176,7 +176,7 @@ while True:
         #capivara.draw()
         #capivara.movimento()
         
-        time_atual = pygame.time.get_ticks()
+        time_atual = pygame.time.get_ticks() - tempo_fase1
 
         if vilao_pos_atual == vilao_pos1: #------------------ aqui vai para a segunda posição
             if time_atual - time_inicio_posicao >= tpos_vilao1:
