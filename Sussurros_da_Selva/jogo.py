@@ -231,8 +231,8 @@ while True:
                     time_inicio_estado = time_atual
 
                     #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
-                    bola1.rect.x = -100
-                    bola2.rect.x = -100
+                    bola1.rect.x = -150
+                    bola2.rect.x = -150
             
 
         arana.atualizar()
