@@ -64,14 +64,14 @@ x_arana = 100
 y_arana = 500
 
 x_curupira = 900
-y_curupira = 558
+y_curupira = 525
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
 bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Inimigos('bola_de_fogo',1050, 600, 2.5, 10, tela )
+bola2 = Inimigos('bola_de_fogo',1050, 590, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
