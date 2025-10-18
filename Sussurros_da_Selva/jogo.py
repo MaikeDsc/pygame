@@ -9,12 +9,12 @@ from OBJETOS_HORIZONTAIS import *
 pygame.init()
 
 
-largura = 1080
+largura = 1280
 altura = 720
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
+cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/grade_fundo.png")
 cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
 
 #parte sonora
@@ -63,15 +63,15 @@ chao_Y = 600
 x_arana = 100
 y_arana = 500
 
-x_curupira = 900
-y_curupira = 518
+x_curupira = 1000
+y_curupira = 455
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Inimigos('bola_de_fogo',1050, 590, 2.5, 10, tela )
+bola1 = Inimigos('bola_de_fogo',1400, 250, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Inimigos('bola_de_fogo',1400, 500, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
@@ -214,8 +214,8 @@ while True:
                     time_inicio_estado = time_atual
 
                     #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
-                    bola1.rect.x = 1050
-                    bola2.rect.x = 1050
+                    bola1.rect.x = 1400
+                    bola2.rect.x = 1400
             
             if vilao_pos_atual == vilao_pos2 and curupira.vivo == True:
                 bola1.giro = True
