@@ -15,7 +15,7 @@ tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
 cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/grade_fundo.png")
-cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
+#cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
 
 #parte sonora
 
