@@ -5,17 +5,28 @@ from BALAS import *
 from ARANA import *
 from VILAO import *
 from OBJETOS_HORIZONTAIS import *
+from moviepy import VideoFileClip
+
+
+def pathabs(pasta,arquivo):
+
+    import os
+
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual,pasta,arquivo)
 
 pygame.init()
 
 
+
 largura = 1280
 altura = 720
+
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/grade_fundo.png")
-#cenario_fase1 = pygame.transform.scale(cenario_fase1, (largura, altura))
+cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
 
 #parte sonora
 
@@ -24,10 +35,6 @@ pygame.mixer.music.play(-1)
 
 laser = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/laser.wav")
 laser.set_volume(0.2)
-
-
-#taxas de quadro (frame rate)
-relogio = pygame.time.Clock()
 
 #posições em x  1 e 2 do Vilão
 vilao_xposicao_1 = 800
@@ -58,20 +65,20 @@ time_inicio_estado = pygame.time.get_ticks()
 
 #define a instancia player 
 
-chao_Y = 600
+chao_Y = 625
 
 x_arana = 100
-y_arana = 500
+y_arana = 550
 
 x_curupira = 1000
-y_curupira = 455
+y_curupira = 518
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Inimigos('bola_de_fogo',1400, 250, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Inimigos('bola_de_fogo',1400, 500, 2.5, 10, tela )
+bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Inimigos('bola_de_fogo',1050, 590, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
@@ -84,7 +91,7 @@ projeteis = []
 
 clock = pygame.time.Clock()
 
-fonte_menu = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 35)
+fonte_menu = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 35)
 BRANCO = (255,255,255)
 PRETO = (0,0,0)
 
@@ -93,11 +100,53 @@ def desenhar_texto(texto,fonte,cor,y):
     x = (largura - img.get_width()) // 2
     tela.blit(img,(x,y))
 
-estado = "menu"
-tempo_total = 90
+def intro_video(tela,largura,altura):
+    
+    clip = VideoFileClip(pathabs("videos","intro.mp4")).resized((largura,altura))
+    
+    for frame in clip.iter_frames(fps = 30, dtype = "uint8"):
+        frame_surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
+        tela.blit(frame_surface, (0,0))
+        pygame.display.update()
+        clock.tick(60)
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+    clip.close()
+    return "introducao"
+
+def introducao(tela,largura,altura):
+    clip = VideoFileClip(pathabs("introducao","introducao_2.mp4")).resized((largura,altura))
+    
+    for frame in clip.iter_frames(fps = 30, dtype = "uint8"):
+        frame_surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
+        tela.blit(frame_surface, (0,0))
+        pygame.display.update()
+        clock.tick(60)
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+    clip.close()
+    return 'menu'
+
+estado = "intro"
+
+tempo_total = 30
 
 while True:
-    if estado == "menu":
+    if estado == "intro":
+        estado = intro_video(tela,largura,altura)
+
+    elif estado == "introducao":
+        estado = introducao(tela,largura,altura)
+
+    elif estado == "menu":
 
         tela.fill(PRETO)
 
@@ -138,7 +187,7 @@ while True:
         segundos = int(tempo_restante % 60)
         texto_tempo = f"{minutos:02d}:{segundos:02d}"
 
-        fonte_cronometro = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 35)
+        fonte_cronometro = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 35)
         texto_cronometro = fonte_cronometro.render(texto_tempo, True, (255,255,255))
         tela.blit(texto_cronometro, (600, 110))
 
@@ -154,7 +203,7 @@ while True:
                 if event.key == K_o:
                     laser.play()
                     nova_bala = Balas(arana.rect.right, arana.rect.centery, arana.direcao,tela)
-                    projeteis.append(nova_bala)
+                    projeteis.append(nova_bala) 
         
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
@@ -214,8 +263,8 @@ while True:
                     time_inicio_estado = time_atual
 
                     #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
-                    bola1.rect.x = 1400
-                    bola2.rect.x = 1400
+                    bola1.rect.x = 1050
+                    bola2.rect.x = 1050
             
             if vilao_pos_atual == vilao_pos2 and curupira.vivo == True:
                 bola1.giro = True
@@ -253,8 +302,8 @@ while True:
 #-------------------------------------------------------------------------------------------------
 
     elif estado == "game over":
-        fonte_titulo = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 50)
-        fonte_texto = pygame.font.Font("Sussurros_da_Selva/PressStart2P.ttf", 20)
+        fonte_titulo = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 50)
+        fonte_texto = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 20)
 
         texto_game_over = fonte_titulo.render("GAME OVER", True, (255,0,0) )
         texto_voltar = fonte_texto.render("Toque em qualquer botao para voltar ao menu", True, BRANCO)

@@ -6,7 +6,7 @@ class Arana:
         self.largura = largura
         self.chao_Y = chao_Y
         self.rect = pygame.Rect(x,y,40,80)
-        self.velocidade_x = 6
+        self.velocidade_x = 7
         self.velocidade_y = 0
         self.gravidade = 1
         self.esta_no_ar = False
@@ -37,8 +37,8 @@ class Arana:
         if teclas[K_d]:
             self.direcao = 1
             self.rect.x += self.velocidade_x
-            if self.rect.x > self.largura - 30:
-                self.rect.x = self.largura - 30
+            if self.rect.x > self.largura - 40:
+                self.rect.x = self.largura - 40
         if teclas[K_w]:
             self.pular()
 
