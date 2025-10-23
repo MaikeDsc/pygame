@@ -4,7 +4,8 @@ from sys import exit
 from BALAS import *
 from ARANA import *
 from VILAO import *
-from OBJETOS_HORIZONTAIS import *
+from MAGIA import *
+from INIMIGOS import *
 from moviepy import VideoFileClip
 
 
@@ -70,15 +71,15 @@ chao_Y = 625
 x_arana = 100
 y_arana = 550
 
-x_curupira = 1000
-y_curupira = 518
+x_curupira = 1100
+y_curupira = 520
 
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Inimigos('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Inimigos('bola_de_fogo',1050, 590, 2.5, 10, tela )
+bola1 = Magias('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Magias('bola_de_fogo',1050, 590, 2.5, 10, tela )
 
 # rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
 
@@ -135,7 +136,7 @@ def introducao(tela,largura,altura):
     clip.close()
     return 'menu'
 
-estado = "intro"
+estado = "menu"
 
 tempo_total = 30
 
