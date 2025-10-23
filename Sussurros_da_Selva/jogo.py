@@ -3,7 +3,7 @@ from pygame.locals import *
 from sys import exit
 from BALAS import *
 from ARANA import *
-from VILAO import *
+from VILAOO import *
 from MAGIA import *
 from INIMIGOS import *
 from moviepy import VideoFileClip
