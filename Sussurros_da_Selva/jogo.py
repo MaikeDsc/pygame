@@ -78,11 +78,11 @@ curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Magias('bola_de_fogo',1050, 350, 2.5, 10, tela )              #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Magias('bola_de_fogo',1050, 590, 2.5, 10, tela )
+bola1 = Magias('bola_de_fogo',1300, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Magias('bola_de_fogo',1300, 590, 2.5, 10, tela )
 
-# rato1 = Inimigos('rato',1100, 598, 0.5, 1, tela  )         
-
+rato1 = Inimigos('rato',1300, 605, 0.5, 1, tela  )         
+rato_sentido = 'esquerda'
 # capivara = Inimigos('capivara', 1100, 580, 3, 4, tela)
 
 
@@ -138,7 +138,7 @@ def introducao(tela,largura,altura):
 
 estado = "menu"
 
-tempo_total = 30
+tempo_total = 60
 
 while True:
     if estado == "intro":
@@ -164,7 +164,7 @@ while True:
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
                     pygame.mixer.music.stop()
-                    pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/trilha sonora fase 1.mp3")
+                    pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
                     pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.play(-1)
                     tempo_fase1 = pygame.time.get_ticks()
@@ -209,23 +209,26 @@ while True:
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
 
+
+        
         #personagens e ataques
 
         curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
         bola1.atualizar_animacao()
         bola2.atualizar_animacao()
 
-        #rato1.atualizar_animacao()
+       
         #capivara.atualizar_animacao()
     
         curupira.draw()                       #desenhar as imagem com o metodo draw
-    
-        #rato1.draw()
-        #rato1.movimento()
+
+        
 
         #capivara.draw()
         #capivara.movimento()
         
+    #------------------- vilão aqui -------------------------------------
+
         time_atual = pygame.time.get_ticks() - tempo_fase1
 
         if vilao_pos_atual == vilao_pos1: #------------------ aqui vai para a segunda posição
@@ -283,11 +286,32 @@ while True:
                     #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
                     bola1.rect.x = -150
                     bola2.rect.x = -150
-            
+        
+        #----------------------------- outros inimigos ------------------------
+        
+        if time_atual > 3000:
+
+            rato1.atualizar_animacao()
+            rato1.draw()
+            if rato_sentido == "esquerda":
+                if rato1.rect.x > 500 :
+                    rato1.movimento(0)
+                    rato1.giro = False
+
+                else: 
+                    rato_sentido = "direita"
+
+            elif rato_sentido ==  'direita':
+                rato1.movimento(1)
+                rato1.giro = True
+                if rato1.rect.x > 1000: 
+                    rato_sentido = "esquerda"
 
         arana.atualizar()
         arana.desenhar(tela)
 
+
+       
         for bala in projeteis:
             bala.atualizar()
             bala.desenhar()
