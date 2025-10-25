@@ -29,7 +29,7 @@ pygame.display.set_caption("Sussuros da Selva")
 
 cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
 
-#--------------- Carregamento de sons ----------------------------
+#------------------------- Carregamento de sons ----------------------------------
 
 menu_sound = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
 pygame.mixer.music.play(-1)
@@ -37,12 +37,10 @@ pygame.mixer.music.play(-1)
 laser = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/laser.wav")
 laser.set_volume(0.2)
 
-magia_fogo = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/magias/fogo1.mp3")
-magia_fogo.set_volume(0.2)
-
-grito_curupira = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/gritos/grito1.mp3")
+grito_curupira = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/gritos/grito_magia_fogo.mp3")
 grito_curupira.set_volume(0.2)
 
+#----------------- POSIÇÕES DO CURUPIRA --------------------------
 #posições em x  1 e 2 do Vilão
 vilao_xposicao_1 = 1000
 vilao_xposicao_2 = 20
@@ -51,47 +49,41 @@ vilao_xposicao_2 = 20
 vilao_pos1 = 0
 vilao_pos2 = 1
 vilao_pos_atual = vilao_pos1
-#tempos do Vilão em cada posição ele começa na 1 
 
+#tempos do Vilão em cada posição ele começa na 1 
 tpos_vilao1 = 22800
 tpos_vilao2 = 22800
-
 time_inicio_posicao = pygame.time.get_ticks()
 
 #estados do curupira
 estado_obsoleto = 0
 estado_atacando = 1
 estado_atual= estado_obsoleto
+
 #setando os tempo dos ataques 
-tempo_obsoleto = 3000    #em milisegundos pq o relogio só conta em milisegundos
+tempo_obsoleto = 3000    
 tempo_lancando = 2400
 
 time_inicio_estado = pygame.time.get_ticks()
   
-#--------------------------------------------------------------------------------
 
-#define a instancia player 
+#--------------------------- INSTÂNCIAS ---------------------------
 
 chao_Y = 625
-
 x_arana = 100
 y_arana = 550
+arana = Arana(x_arana,y_arana,chao_Y,largura)
 
 x_curupira = 1100
 y_curupira = 520
-
 curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
-
-arana = Arana(x_arana,y_arana,chao_Y,largura)
 
 bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
 rato1 = Inimigos('rato',-200, 605, 0.5, 1, 'direita', tela  )         
-capivara = Inimigos('capivara', 1300, 580, 3, 4,'esquerda', tela)
+capivara = Inimigos('capivara', 1300, 583, 3, 4,'esquerda', tela)
 
-
-#-----------------------------------------------------------------------------
 
 projeteis = []
 
@@ -215,7 +207,7 @@ while True:
         arana.movimento(teclas)
 
 
-        #--------------------PERSONAGENS E ATAQUES
+        #--------------------PERSONAGENS E ATAQUES---------------------------------
         arana.atualizar()
         arana.desenhar(tela)
 
@@ -224,7 +216,7 @@ while True:
         curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
         curupira.draw()                       #desenhar as imagem com o metodo draw
 
-        #------------------- vilão aqui -------------------------------------
+        #------------------- CURUPIRA -------------------------------------
 
         time_atual = pygame.time.get_ticks() - tempo_fase1
 
@@ -253,7 +245,6 @@ while True:
 
             if estado_atual == estado_atacando:
                 grito_curupira.play()
-                #magia_fogo.play()
 
                 if vilao_pos_atual == vilao_pos1:
                     
@@ -263,9 +254,6 @@ while True:
                     bola1.movimento(0)
                     bola2.draw()
                     bola2.movimento(0)
-
-                    magia_fogo.play()
-
                 
                     if time_atual - time_inicio_estado >= tempo_lancando:
                         estado_atual = estado_obsoleto
@@ -273,9 +261,7 @@ while True:
                         time_inicio_estado = time_atual
                      #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
                         bola1.rect.x = 1300
-                        bola2.rect.x = 1300
-
-                        
+                        bola2.rect.x = 1300       
                 
                 if vilao_pos_atual == vilao_pos2:
                    
@@ -294,10 +280,8 @@ while True:
                         #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
                         bola1.rect.x = -150
                         bola2.rect.x = -150
-
-                              
+         
         #----------------------------- outros inimigos ------------------------
-        
 
         #-----------primeiro rato    ---------------------
         if time_atual > 6000:
@@ -312,7 +296,7 @@ while True:
             elif rato1.rect.x > 1200: 
                 rato1.direcao = "esquerda"
 
-        #--------capivara ----------------------  
+        #---------------capivara ----------------------  
         if time_atual > 30000:
 
             capivara.atualizar_animacao()
@@ -325,7 +309,7 @@ while True:
             elif capivara.rect.x > 1200: 
                 capivara.direcao = "esquerda"
 
-      
+        #---------------------COLIZOES DOS PROJETEIS DO ARANA ------------------
         for bala in projeteis:
             bala.atualizar()
             bala.desenhar()
