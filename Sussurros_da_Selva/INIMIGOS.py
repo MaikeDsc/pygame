@@ -4,11 +4,11 @@ import pygame
 #Como: Bolas de fogo, inimigos rastejantes e voadores outras magias dos bosses
 
 class Inimigos(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
+    def __init__(self, nome_pasta, x, y, escala, velocidade, direcao,tela):
         pygame.sprite.Sprite.__init__(self)
         
         self.giro = False
-        self.direcao = 0
+        self.direcao = direcao
         self.velocidade = velocidade
         self.atualizar_time = pygame.time.get_ticks()
         self.nome_pasta = nome_pasta
@@ -41,14 +41,17 @@ class Inimigos(pygame.sprite.Sprite):
             if self.indice_frame >= len(self.lista_animacoes):
                 self.indice_frame = 0
     
-    def movimento(self, direcao): # direção é 1 ou 0 
+    def movimento(self): # direção é 1 ou 0 
         
         
-        if direcao != self.direcao:                 #movimento da esquerda para direita
+        if self.direcao == 'direita':                 #movimento da esquerda para direita
             self.rect.x += self.velocidade
+            self.giro = True
         
-        else:
+        elif self.direcao == 'esquerda':
             self.rect.x -= self.velocidade          #movimento da direita para esquerda 
+            self.giro = False 
+
 
     def draw(self):
         #self.tela.blit(self.img ,self.rect)

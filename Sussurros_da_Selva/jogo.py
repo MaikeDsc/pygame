@@ -29,7 +29,7 @@ pygame.display.set_caption("Sussuros da Selva")
 
 cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
 
-#parte sonora
+#--------------- Carregamento de sons ----------------------------
 
 menu_sound = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
 pygame.mixer.music.play(-1)
@@ -37,8 +37,14 @@ pygame.mixer.music.play(-1)
 laser = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/laser.wav")
 laser.set_volume(0.2)
 
+magia_fogo = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/magias/fogo1.mp3")
+magia_fogo.set_volume(0.2)
+
+grito_curupira = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/gritos/grito1.mp3")
+grito_curupira.set_volume(0.2)
+
 #posições em x  1 e 2 do Vilão
-vilao_xposicao_1 = 800
+vilao_xposicao_1 = 1000
 vilao_xposicao_2 = 20
 
 #para usar no if  
@@ -47,8 +53,8 @@ vilao_pos2 = 1
 vilao_pos_atual = vilao_pos1
 #tempos do Vilão em cada posição ele começa na 1 
 
-tpos_vilao1 = 30000
-tpos_vilao2 = 20000
+tpos_vilao1 = 22800
+tpos_vilao2 = 22800
 
 time_inicio_posicao = pygame.time.get_ticks()
 
@@ -78,12 +84,11 @@ curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 arana = Arana(x_arana,y_arana,chao_Y,largura)
 
-bola1 = Magias('bola_de_fogo',1300, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
-bola2 = Magias('bola_de_fogo',1300, 590, 2.5, 10, tela )
+bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-rato1 = Inimigos('rato',1300, 605, 0.5, 1, tela  )         
-rato_sentido = 'esquerda'
-# capivara = Inimigos('capivara', 1100, 580, 3, 4, tela)
+rato1 = Inimigos('rato',-200, 605, 0.5, 1, 'direita', tela  )         
+capivara = Inimigos('capivara', 1300, 580, 3, 4,'esquerda', tela)
 
 
 #-----------------------------------------------------------------------------
@@ -165,7 +170,7 @@ while True:
                 if event.key == K_RETURN:
                     pygame.mixer.music.stop()
                     pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
-                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play(-1)
                     tempo_fase1 = pygame.time.get_ticks()
                     estado = "fase 1"
@@ -210,108 +215,117 @@ while True:
         arana.movimento(teclas)
 
 
-        
-        #personagens e ataques
-
-        curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
-        bola1.atualizar_animacao()
-        bola2.atualizar_animacao()
-
-       
-        #capivara.atualizar_animacao()
-    
-        curupira.draw()                       #desenhar as imagem com o metodo draw
-
-        
-
-        #capivara.draw()
-        #capivara.movimento()
-        
-    #------------------- vilão aqui -------------------------------------
-
-        time_atual = pygame.time.get_ticks() - tempo_fase1
-
-        if vilao_pos_atual == vilao_pos1: #------------------ aqui vai para a segunda posição
-            if time_atual - time_inicio_posicao >= tpos_vilao1:
-                curupira.giro = True
-                curupira.rect.x = vilao_xposicao_2
-                vilao_pos_atual = vilao_pos2
-                time_inicio_posicao = time_atual
-        
-        if vilao_pos_atual == vilao_pos2:               #aqui volta para a posicao inicial 
-            if time_atual - time_inicio_posicao >= tpos_vilao2:
-                curupira.giro = False
-                curupira.rect.x = vilao_xposicao_1
-                vilao_pos_atual = vilao_pos1
-                time_inicio_posicao = time_atual
-
-
-        if estado_atual == estado_obsoleto:
-            if time_atual - time_inicio_estado >= tempo_obsoleto:
-                estado_atual = estado_atacando
-                curupira.atualizar_acoes(1)
-                time_inicio_estado = time_atual
-
-        if estado_atual == estado_atacando:
-            if vilao_pos_atual == vilao_pos1 and curupira.vivo == True:
-                bola1.giro = False
-                bola2.giro = False
-                bola1.draw()
-                bola1.movimento(0)
-                bola2.draw()
-                bola2.movimento(0)
-            
-                if time_atual - time_inicio_estado >= tempo_lancando:
-                    estado_atual = estado_obsoleto
-                    curupira.atualizar_acoes(0)
-                    time_inicio_estado = time_atual
-
-                    #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
-                    bola1.rect.x = 1050
-                    bola2.rect.x = 1050
-            
-            if vilao_pos_atual == vilao_pos2 and curupira.vivo == True:
-                bola1.giro = True
-                bola2.giro = True
-                bola1.draw()
-                bola1.movimento(1)
-                bola2.draw()
-                bola2.movimento(1)
-            
-                if time_atual - time_inicio_estado >= tempo_lancando:
-                    estado_atual = estado_obsoleto
-                    curupira.atualizar_acoes(0)
-                    time_inicio_estado = time_atual
-
-                    #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
-                    bola1.rect.x = -150
-                    bola2.rect.x = -150
-        
-        #----------------------------- outros inimigos ------------------------
-        
-        if time_atual > 3000:
-
-            rato1.atualizar_animacao()
-            rato1.draw()
-            if rato_sentido == "esquerda":
-                if rato1.rect.x > 500 :
-                    rato1.movimento(0)
-                    rato1.giro = False
-
-                else: 
-                    rato_sentido = "direita"
-
-            elif rato_sentido ==  'direita':
-                rato1.movimento(1)
-                rato1.giro = True
-                if rato1.rect.x > 1000: 
-                    rato_sentido = "esquerda"
-
+        #--------------------PERSONAGENS E ATAQUES
         arana.atualizar()
         arana.desenhar(tela)
 
+        bola1.atualizar_animacao()
+        bola2.atualizar_animacao()
+        curupira.atualizar_animacao()         #atualiza o frame antes de desenhar
+        curupira.draw()                       #desenhar as imagem com o metodo draw
 
-       
+        #------------------- vilão aqui -------------------------------------
+
+        time_atual = pygame.time.get_ticks() - tempo_fase1
+
+        if curupira.vivo == True:
+
+            if vilao_pos_atual == vilao_pos1: #------------------ aqui vai para a segunda posição
+                if time_atual - time_inicio_posicao >= tpos_vilao1:
+                    curupira.giro = True
+                    curupira.rect.x = vilao_xposicao_2
+                    vilao_pos_atual = vilao_pos2
+                    time_inicio_posicao = time_atual
+            
+            if vilao_pos_atual == vilao_pos2:               #aqui volta para a posicao inicial 
+                if time_atual - time_inicio_posicao >= tpos_vilao2:
+                    curupira.giro = False
+                    curupira.rect.x = vilao_xposicao_1
+                    vilao_pos_atual = vilao_pos1
+                    time_inicio_posicao = time_atual
+
+
+            if estado_atual == estado_obsoleto:
+                if time_atual - time_inicio_estado >= tempo_obsoleto:
+                    estado_atual = estado_atacando
+                    curupira.atualizar_acoes(1)
+                    time_inicio_estado = time_atual
+
+            if estado_atual == estado_atacando:
+                grito_curupira.play()
+                #magia_fogo.play()
+
+                if vilao_pos_atual == vilao_pos1:
+                    
+                    bola1.giro = False
+                    bola2.giro = False
+                    bola1.draw()
+                    bola1.movimento(0)
+                    bola2.draw()
+                    bola2.movimento(0)
+
+                    magia_fogo.play()
+
+                
+                    if time_atual - time_inicio_estado >= tempo_lancando:
+                        estado_atual = estado_obsoleto
+                        curupira.atualizar_acoes(0)
+                        time_inicio_estado = time_atual
+                     #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
+                        bola1.rect.x = 1300
+                        bola2.rect.x = 1300
+
+                        
+                
+                if vilao_pos_atual == vilao_pos2:
+                   
+                    bola1.giro = True
+                    bola2.giro = True
+                    bola1.draw()
+                    bola1.movimento(1)
+                    bola2.draw()
+                    bola2.movimento(1)
+                
+                    if time_atual - time_inicio_estado >= tempo_lancando:
+                        estado_atual = estado_obsoleto
+                        curupira.atualizar_acoes(0)
+                        time_inicio_estado = time_atual
+
+                        #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
+                        bola1.rect.x = -150
+                        bola2.rect.x = -150
+
+                              
+        #----------------------------- outros inimigos ------------------------
+        
+
+        #-----------primeiro rato    ---------------------
+        if time_atual > 6000:
+
+            rato1.atualizar_animacao()
+            rato1.draw()
+            rato1.movimento()   
+            
+            if rato1.rect.x < -150 :   
+                rato1.direcao = "direita"
+
+            elif rato1.rect.x > 1200: 
+                rato1.direcao = "esquerda"
+
+        #--------capivara ----------------------  
+        if time_atual > 30000:
+
+            capivara.atualizar_animacao()
+            capivara.draw()
+            capivara.movimento()
+             
+            if capivara.rect.x < -150 :   
+                capivara.direcao = "direita"
+
+            elif capivara.rect.x > 1200: 
+                capivara.direcao = "esquerda"
+
+      
         for bala in projeteis:
             bala.atualizar()
             bala.desenhar()
@@ -324,7 +338,7 @@ while True:
 
         pygame.display.flip()
 
-#-------------------------------------------------------------------------------------------------
+#------------------------------ GAME OVER ---------------------------------------------------------
 
     elif estado == "game over":
         fonte_titulo = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 50)
