@@ -69,7 +69,6 @@ class Vilao(pygame.sprite.Sprite):
         if self.vivo:
             self.vida -= dano
             if self.vida <= 0:
-                self.vida = 0
                 self.vivo = False
 
 #============================================================================================================
