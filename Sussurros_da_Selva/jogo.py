@@ -6,19 +6,15 @@ from ARANA import *
 from VILAO import *
 from MAGIA import *
 from INIMIGOS import *
-from moviepy import VideoFileClip
+import os
 
-
-def pathabs(pasta,arquivo):
-
-    import os
-
-    dir_atual = os.path.dirname(__file__)
-
-    return os.path.join(dir_atual,pasta,arquivo)
 
 pygame.init()
 
+def pathabs(*partes):
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual, *partes)
 
 
 largura = 1280
@@ -42,7 +38,7 @@ grito_curupira.set_volume(0.2)
 
 #----------------- POSIÇÕES DO CURUPIRA --------------------------
 #posições em x  1 e 2 do Vilão
-vilao_xposicao_1 = 1000
+'''vilao_xposicao_1 = 1000
 vilao_xposicao_2 = 20
 
 #para usar no if  
@@ -65,7 +61,7 @@ tempo_obsoleto = 3000
 tempo_lancando = 2400
 
 time_inicio_estado = pygame.time.get_ticks()
-  
+  '''
 
 #--------------------------- INSTÂNCIAS ---------------------------
 
@@ -89,88 +85,187 @@ projeteis = []
 
 clock = pygame.time.Clock()
 
-fonte_menu = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 35)
 BRANCO = (255,255,255)
 PRETO = (0,0,0)
 
-def desenhar_texto(texto,fonte,cor,y):
-    img = fonte.render(texto,True,cor)
-    x = (largura - img.get_width()) // 2
-    tela.blit(img,(x,y))
 
-def intro_video(tela,largura,altura):
-    
-    clip = VideoFileClip(pathabs("videos","intro.mp4")).resized((largura,altura))
-    
-    for frame in clip.iter_frames(fps = 30, dtype = "uint8"):
-        frame_surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
-        tela.blit(frame_surface, (0,0))
-        pygame.display.update()
-        clock.tick(60)
+def resetar_fase1():
+    global arana, curupira, bola1, bola2, rato1, capivara, projeteis, x_curupira,y_curupira,x_arana,y_arana
+    global tempo_fase1, vilao_pos1, vilao_pos2, vilao_pos_atual
+    global time_inicio_posicao, tpos_vilao1, tpos_vilao2, vilao_xposicao_1,vilao_xposicao_2
+    global estado_obsoleto, estado_atacando, estado_atual
+    global tempo_obsoleto, tempo_lancando, time_inicio_estado
+
+    tempo_fase1 = pygame.time.get_ticks()
+
+    #recriar personagens
+    arana = Arana(x_arana,y_arana,chao_Y,largura, 3)
+    curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
+    curupira.vivo = True
+
+    bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )  
+    bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
+
+    rato1 = Inimigos('rato',-200, 605, 0.5, 1, 'direita', tela  )         
+    capivara = Inimigos('capivara', 1300, 583, 3, 4,'esquerda', tela)
+
+    projeteis = []
+
+    #estados do vilao e temporizadores
+    vilao_xposicao_1 = 1000
+    vilao_xposicao_2 = 20
+
+    #para usar no if  
+    vilao_pos1 = 0
+    vilao_pos2 = 1
+    vilao_pos_atual = vilao_pos1
+
+    #tempos do Vilão em cada posição ele começa na 1 
+    tpos_vilao1 = 22800
+    tpos_vilao2 = 22800
+    time_inicio_posicao = tempo_fase1
+
+    #estados do curupira
+    estado_obsoleto = 0
+    estado_atacando = 1
+    estado_atual= estado_obsoleto
+
+    #setando os tempo dos ataques 
+    tempo_obsoleto = 3000    
+    tempo_lancando = 2400
+
+    time_inicio_estado = tempo_fase1
+
+def intro():
+    pasta_frames = pathabs('imagens','intro')
+    fps = 20
+
+    frames = []
+
+    for nome in sorted(os.listdir(pasta_frames)):
+        if nome.endswith('.png'):
+            caminho = os.path.join(pasta_frames,nome)
+            imagem = pygame.image.load(caminho).convert()
+            imagem = pygame.transform.scale(imagem, (largura, altura))
+
+            frames.append(imagem)
+
+    frame_index = 0
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+        tela.blit(frames[frame_index], (0,0))
+        pygame.display.flip()
+
+        frame_index += 1
+
+        if frame_index >= len(frames):
+            return 'submenu'
+        
+        clock.tick(fps)
+
+def submenu():
+    pasta_frames = pathabs('imagens','submenu')
+    fps = 25
+
+    frames = []
+
+    for nome in sorted(os.listdir(pasta_frames)):
+        if nome.endswith('.png'):
+            caminho = os.path.join(pasta_frames,nome)
+            imagem = pygame.image.load(caminho).convert()
+            imagem = pygame.transform.scale(imagem, (largura, altura))
+
+            frames.append(imagem)
+
+    frame_index = 0
+
+    while True:
+        
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+            elif event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
+                return 'menu'
+
+        tela.blit(frames[frame_index], (0,0))
+        pygame.display.flip()
+
+        frame_index += 1
+
+        if frame_index >= len(frames):
+            frame_index = 0
+        
+        clock.tick(fps)
+
+def menu():
+    pasta_frames = pathabs('imagens','menu')
+    fps = 25
+
+    frames = []
+
+    for nome in sorted(os.listdir(pasta_frames)):
+        if nome.endswith('.png'):
+            caminho = os.path.join(pasta_frames,nome)
+            imagem = pygame.image.load(caminho).convert()
+            imagem = pygame.transform.scale(imagem, (largura, altura))
+
+            frames.append(imagem)
+
+    frame_index = 0
+
+    while True:
+
+        jogar = pygame.draw.rect(tela,'white',(538,385,205,57))
+        tutorial = pygame.draw.rect(tela,'white',(538,469,205,57))
+        sair = pygame.draw.rect(tela,'white',(538,551,205,57))
 
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 exit()
 
-    clip.close()
-    return "introducao"
+            if event.type == MOUSEBUTTONDOWN:
+                if jogar.collidepoint(event.pos):
+                    resetar_fase1()
+                    return 'fase 1'
+                
+                elif sair.collidepoint(event.pos):
+                    pygame.quit()
+                    exit()
 
-def introducao(tela,largura,altura):
-    clip = VideoFileClip(pathabs("introducao","introducao_2.mp4")).resized((largura,altura))
-    
-    for frame in clip.iter_frames(fps = 30, dtype = "uint8"):
-        frame_surface = pygame.surfarray.make_surface(frame.swapaxes(0, 1))
-        tela.blit(frame_surface, (0,0))
-        pygame.display.update()
-        clock.tick(60)
+        tela.blit(frames[frame_index], (0,0))
+        
+        pygame.display.flip()
 
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                exit()
+        frame_index += 1
 
-    clip.close()
-    return 'menu'
+        if frame_index >= len(frames):
+            frame_index = 0
+        
+        clock.tick(fps)
+
 
 estado = "menu"
+tempo_total = 90
 
-tempo_total = 60
 
 while True:
     if estado == "intro":
-        estado = intro_video(tela,largura,altura)
+        estado = intro()
 
-    elif estado == "introducao":
-        estado = introducao(tela,largura,altura)
+    elif estado == "submenu":
+        estado = submenu()
 
     elif estado == "menu":
 
-        tela.fill(PRETO)
-
-        desenhar_texto("SUSSUROS DA SELVA",fonte_menu, BRANCO, 200)
-        desenhar_texto("Pressione ENTER para jogar", fonte_menu, BRANCO, 400)
-        desenhar_texto("Pressione ESC para sair", fonte_menu, BRANCO, 500)
-
-        pygame.display.flip()
-
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                
-                exit()
-            if event.type == KEYDOWN:
-                if event.key == K_RETURN:
-                    pygame.mixer.music.stop()
-                    pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
-                    pygame.mixer.music.set_volume(0.5)
-                    pygame.mixer.music.play(-1)
-                    tempo_fase1 = pygame.time.get_ticks()
-                    estado = "fase 1"
-
-                if event.key == K_ESCAPE:
-                    
-                    exit()
-
+      estado = menu()
                     
     elif estado == "fase 1":
 
@@ -197,11 +292,17 @@ while True:
             if event.type == QUIT:
                 pygame.quit()
                 exit()
+
             if event.type == KEYDOWN:
                 if event.key == K_o:
                     laser.play()
                     nova_bala = Balas(arana.rect.right, arana.rect.centery, arana.direcao,tela)
                     projeteis.append(nova_bala) 
+
+        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect):
+            arana.tomar_dano()
+            if arana.vivo == False:
+                estado = 'game over'
         
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
@@ -218,7 +319,7 @@ while True:
 
         #------------------- CURUPIRA -------------------------------------
 
-        time_atual = pygame.time.get_ticks() - tempo_fase1
+        time_atual = pygame.time.get_ticks() 
 
         if curupira.vivo == True:
 
@@ -284,7 +385,7 @@ while True:
         #----------------------------- outros inimigos ------------------------
 
         #-----------primeiro rato    ---------------------
-        if time_atual > 6000:
+        if time_atual - tempo_fase1 > 6000:
 
             rato1.atualizar_animacao()
             rato1.draw()
@@ -297,7 +398,7 @@ while True:
                 rato1.direcao = "esquerda"
 
         #---------------capivara ----------------------  
-        if time_atual > 30000:
+        if time_atual - tempo_fase1 > 30000:
 
             capivara.atualizar_animacao()
             capivara.draw()
@@ -343,7 +444,7 @@ while True:
                 pygame.quit()
                 exit()
             if event.type == KEYDOWN:
-                pygame.mixer.music.stop()
-                pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
-                pygame.mixer.music.play(-1)
+                #pygame.mixer.music.stop()
+                #pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
+                #pygame.mixer.music.play(-1)
                 estado = "menu"
