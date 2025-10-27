@@ -252,7 +252,7 @@ def menu():
         clock.tick(fps)
 
 
-estado = "menu"
+estado = "intro"
 tempo_total = 90
 
 
@@ -444,7 +444,7 @@ while True:
                 pygame.quit()
                 exit()
             if event.type == KEYDOWN:
-                #pygame.mixer.music.stop()
-                #pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
-                #pygame.mixer.music.play(-1)
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
+                pygame.mixer.music.play(-1)
                 estado = "menu"
