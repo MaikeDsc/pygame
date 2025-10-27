@@ -233,6 +233,10 @@ def menu():
 
             if event.type == MOUSEBUTTONDOWN:
                 if jogar.collidepoint(event.pos):
+                    pygame.mixer.stop()
+                    musica_fase1 = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
+                    pygame.mixer.music.play(-1)
+
                     resetar_fase1()
                     return 'fase 1'
                 
@@ -252,7 +256,7 @@ def menu():
         clock.tick(fps)
 
 
-estado = "intro"
+estado = "menu"
 tempo_total = 90
 
 
@@ -268,7 +272,8 @@ while True:
       estado = menu()
                     
     elif estado == "fase 1":
-
+        
+        
         clock.tick(60)
         tela.blit(cenario_fase1, (0,0))
 
@@ -299,11 +304,12 @@ while True:
                     nova_bala = Balas(arana.rect.right, arana.rect.centery, arana.direcao,tela)
                     projeteis.append(nova_bala) 
 
-        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect):
+        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect) or arana.rect.colliderect(rato1.rect) or arana.rect.colliderect(capivara.rect):
             arana.tomar_dano()
             if arana.vivo == False:
+                pygame.mixer.music.stop()
                 estado = 'game over'
-        
+
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
 
@@ -444,7 +450,6 @@ while True:
                 pygame.quit()
                 exit()
             if event.type == KEYDOWN:
-                pygame.mixer.music.stop()
                 pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
                 pygame.mixer.music.play(-1)
                 estado = "menu"
