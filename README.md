@@ -1,5 +1,5 @@
 
-# 🌿 Sussurros da Selva
+# Sussurros da Selva
 
 🎮 **Sussurros da Selva** é um jogo 2D de ação e aventura inspirado em clássicos como **Cuphead** e **Hollow Knight**.  
 O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **chefes desafiadores** e provando sua coragem em meio a criaturas sombrias e sussurros da floresta.
@@ -33,13 +33,6 @@ Sua missão é sobreviver às **três grandes lendas do folclore que estão corr
 - 🌀 **Sistema de combate dinâmico**, com ataques a distância e habilidades especiais.  
 - 🦋 **Estilo artístico desenhado à mão**, remetendo a animações retrô.  
 - 💀 **Dificuldade desafiadora**, exigindo reflexos e estratégia para sobreviver.
-
----
-
-## ⚔️ Sobre a pasta Shooter Maike
-
-- 🔫 **Foi um estudo previo** na qual foi trabalhado algumas mecanicas de gameplay durante a aprendizagem sobre o pygame, tais mecanicas podem ser testasdas ou usadas para o projeto Sussuros da Salva, o codigo da pasta shooter pode ser alterado livremente para testes ou visualizações rapidas.  
-
 
 ---
 
