@@ -8,8 +8,9 @@ from MAGIA import *
 from INIMIGOS import *
 import os
 
-
+pygame.mixer.pre_init(44100, -16, 2, 128)
 pygame.init()
+pygame.mixer.set_num_channels(16)
 
 def pathabs(*partes):
     dir_atual = os.path.dirname(__file__)
@@ -25,60 +26,49 @@ pygame.display.set_caption("Sussuros da Selva")
 
 cenario_fase1 = pygame.image.load("Sussurros_da_Selva/imagens/fundo/cenario_1.png")
 
+barra_vida_arana = pygame.image.load("Sussurros_da_Selva/imagens/hud/tronco/0.png")
+barra_vida_arana = pygame.transform.scale(barra_vida_arana, (300,200))
+
+ponto_de_vida = pygame.image.load("Sussurros_da_Selva/imagens/hud/folha/1.png")
+ponto_de_vida = pygame.transform.scale(ponto_de_vida, (250,150))
+
+ponto_de_vida_nulo = pygame.image.load("Sussurros_da_Selva/imagens/hud/folha/0.png")
+ponto_de_vida_nulo = pygame.transform.scale(ponto_de_vida_nulo, (250,150))
+
 #------------------------- Carregamento de sons ----------------------------------
 
-menu_sound = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
+pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
 pygame.mixer.music.play(-1)
 
-laser = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/laser.wav")
-laser.set_volume(0.2)
+click = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/click.wav")
+click.set_volume(0.6)
 
-grito_curupira = pygame.mixer.Sound("Sussurros_da_selva/musica e sons/gritos/grito_magia_fogo.mp3")
-grito_curupira.set_volume(0.2)
+dardo = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/dardo.wav")
+dardo.set_volume(0.6)
 
-#----------------- POSIÇÕES DO CURUPIRA --------------------------
-#posições em x  1 e 2 do Vilão
-'''vilao_xposicao_1 = 1000
-vilao_xposicao_2 = 20
+grito_curupira = pygame.mixer.Sound("Sussurros_da_Selva/musica e sons/gritos/grito_magia_fogo.wav")
+grito_curupira.set_volume(0.15)
 
-#para usar no if  
-vilao_pos1 = 0
-vilao_pos2 = 1
-vilao_pos_atual = vilao_pos1
-
-#tempos do Vilão em cada posição ele começa na 1 
-tpos_vilao1 = 22800
-tpos_vilao2 = 22800
-time_inicio_posicao = pygame.time.get_ticks()
-
-#estados do curupira
-estado_obsoleto = 0
-estado_atacando = 1
-estado_atual= estado_obsoleto
-
-#setando os tempo dos ataques 
-tempo_obsoleto = 3000    
-tempo_lancando = 2400
-
-time_inicio_estado = pygame.time.get_ticks()
-  '''
+def tocar_som(som):
+    canal = pygame.mixer.find_channel(True)
+    canal.play(som)
 
 #--------------------------- INSTÂNCIAS ---------------------------
 
-chao_Y = 625
+chao_Y = 637
 x_arana = 100
-y_arana = 550
-arana = Arana(x_arana,y_arana,chao_Y,largura)
+y_arana = 562
+
+arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
 
 x_curupira = 1100
 y_curupira = 520
-curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
 bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-rato1 = Inimigos('rato',-200, 605, 0.5, 1, 'direita', tela  )         
-capivara = Inimigos('capivara', 1300, 583, 3, 4,'esquerda', tela)
+rato = Inimigos('rato',-200, 610, 0.5, 7, 'direita', tela  )         
+capivara = Inimigos('capivara', 1300, 589, 2.5, 6.5,'esquerda', tela)
 
 
 projeteis = []
@@ -90,24 +80,27 @@ PRETO = (0,0,0)
 
 
 def resetar_fase1():
-    global arana, curupira, bola1, bola2, rato1, capivara, projeteis, x_curupira,y_curupira,x_arana,y_arana
+    global arana, curupira, bola1, bola2, rato, capivara, projeteis, x_curupira,y_curupira,x_arana,y_arana
     global tempo_fase1, vilao_pos1, vilao_pos2, vilao_pos_atual
     global time_inicio_posicao, tpos_vilao1, tpos_vilao2, vilao_xposicao_1,vilao_xposicao_2
     global estado_obsoleto, estado_atacando, estado_atual
     global tempo_obsoleto, tempo_lancando, time_inicio_estado
+    global tempo_congelado
+
+    tempo_congelado = False
 
     tempo_fase1 = pygame.time.get_ticks()
 
     #recriar personagens
-    arana = Arana(x_arana,y_arana,chao_Y,largura, 3)
+    arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
     curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
     curupira.vivo = True
 
-    bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )  
+    bola1 = Magias('bola_de_fogo',1400, 200, 2.5, 10, tela )  
     bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-    rato1 = Inimigos('rato',-200, 605, 0.5, 1, 'direita', tela  )         
-    capivara = Inimigos('capivara', 1300, 583, 3, 4,'esquerda', tela)
+    rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela  )         
+    capivara = Inimigos('capivara', 1300, 589, 2.5, 6.5,'esquerda', tela)
 
     projeteis = []
 
@@ -192,6 +185,7 @@ def submenu():
                 exit()
 
             elif event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
+                click.play()
                 return 'menu'
 
         tela.blit(frames[frame_index], (0,0))
@@ -223,7 +217,7 @@ def menu():
     while True:
 
         jogar = pygame.draw.rect(tela,'white',(538,385,205,57))
-        tutorial = pygame.draw.rect(tela,'white',(538,469,205,57))
+        tutorial_e_dicas = pygame.draw.rect(tela,'white',(538,469,205,57))
         sair = pygame.draw.rect(tela,'white',(538,551,205,57))
 
         for event in pygame.event.get():
@@ -233,17 +227,23 @@ def menu():
 
             if event.type == MOUSEBUTTONDOWN:
                 if jogar.collidepoint(event.pos):
-                    pygame.mixer.stop()
-                    musica_fase1 = pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
+                    click.play()
+                    pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/Nameless King.mp3")
+                    pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play(-1)
 
                     resetar_fase1()
                     return 'fase 1'
                 
                 elif sair.collidepoint(event.pos):
+                    click.play()
                     pygame.quit()
                     exit()
 
+                elif tutorial_e_dicas.collidepoint(event.pos):
+                    click.play()
+                    return 'tutorial_1'
+                
         tela.blit(frames[frame_index], (0,0))
         
         pygame.display.flip()
@@ -255,10 +255,75 @@ def menu():
         
         clock.tick(fps)
 
+def tutorial_1():
+    img = pygame.image.load(pathabs('imagens', 'tutorial', '1.png'))
+    arana_correndo = pygame.image.load(pathabs('imagens', 'arana', 'arana_correndo', '1.png'))
+    arana_correndo = pygame.transform.scale(arana_correndo, (125,170))
+    arana_pulando = pygame.image.load(pathabs('imagens', 'arana', 'arana_pulando', '3.png'))
+    arana_pulando = pygame.transform.scale(arana_pulando, (125,163))
+    arana_atirando = pygame.image.load(pathabs('imagens', 'arana', 'arana_atirando_parado', '0.png'))
+    arana_atirando = pygame.transform.scale(arana_atirando, (125,163))
+
+
+
+    while True:
+
+        sair = pygame.draw.rect(tela,'white',(910,651,149,37))
+        proximo = pygame.draw.rect(tela,'white',(1089,651,149,37))
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == MOUSEBUTTONDOWN:
+                if sair.collidepoint(event.pos):
+                    click.play()
+                    return 'menu'
+                
+                elif proximo.collidepoint(event.pos):
+                    click.play()
+                    return 'tutorial_2'
+
+        tela.blit(img, (0,0))
+        tela.blit(pygame.transform.flip(arana_correndo,True,False), (127,320))
+        tela.blit(arana_correndo, (430,320))
+        tela.blit(arana_pulando, (733,315))
+        tela.blit(arana_atirando, (1036,315))
+
+        pygame.display.flip()
+
+def tutorial_2():
+    img = pygame.image.load(pathabs('imagens', 'tutorial', '2.png'))
+    capivara_tutorial = Inimigos('capivara', largura/2 , altura/2 , 4, 0,'esquerda', tela)
+
+    while True:
+        
+        sair = pygame.draw.rect(tela,'white',(910,651,149,37))
+        voltar = pygame.draw.rect(tela,'white',(1089,651,149,37))
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == MOUSEBUTTONDOWN:
+                if sair.collidepoint(event.pos):
+                    click.play()
+                    return 'menu'
+                
+                elif voltar.collidepoint(event.pos):
+                    click.play()
+                    return 'tutorial_1'
+
+        tela.blit(img, (0,0))
+        capivara_tutorial.atualizar_animacao()
+        capivara_tutorial.draw()
+        pygame.display.flip()
 
 estado = "menu"
 tempo_total = 90
-
+tempo_congelado = False
 
 while True:
     if estado == "intro":
@@ -268,16 +333,37 @@ while True:
         estado = submenu()
 
     elif estado == "menu":
-
       estado = menu()
+
+    elif estado == 'tutorial_1':
+        estado = tutorial_1()
+    
+    elif estado == 'tutorial_2':
+        estado = tutorial_2()
                     
     elif estado == "fase 1":
         
         
         clock.tick(60)
         tela.blit(cenario_fase1, (0,0))
+        tela.blit(barra_vida_arana, (90,30))
+        if arana.vida == 3:
+            tela.blit(ponto_de_vida, (80,60))
+            tela.blit(ponto_de_vida, (130,60))
+            tela.blit(ponto_de_vida, (180,60))
+        elif arana.vida == 2:
+            tela.blit(ponto_de_vida, (80,60))
+            tela.blit(ponto_de_vida, (130,60))
+            tela.blit(ponto_de_vida_nulo, (180,60))
+        elif arana.vida == 1:
+            tela.blit(ponto_de_vida, (80,60))
+            tela.blit(ponto_de_vida_nulo, (130,60))
+            tela.blit(ponto_de_vida_nulo, (180,60))
 
-        tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
+        if tempo_congelado == False:
+            tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
+        else:
+            tempo_decorrido = tempo_decorrido
 
         tempo_restante = max(0, tempo_total - tempo_decorrido)
         
@@ -300,15 +386,20 @@ while True:
 
             if event.type == KEYDOWN:
                 if event.key == K_o:
-                    laser.play()
-                    nova_bala = Balas(arana.rect.right, arana.rect.centery, arana.direcao,tela)
-                    projeteis.append(nova_bala) 
+                    arana.atirar()
+                    tocar_som(dardo)
+                    if arana.direcao == 1:
+                        nova_bala = Balas(arana.rect.right, arana.rect.centery - 25, arana.direcao,tela)
+                    else:
+                        nova_bala = Balas(arana.rect.left, arana.rect.centery - 25, arana.direcao,tela)
+                    projeteis.append(nova_bala)
 
-        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect) or arana.rect.colliderect(rato1.rect) or arana.rect.colliderect(capivara.rect):
+        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect) or arana.rect.colliderect(rato.rect) or arana.rect.colliderect(capivara.rect):
             arana.tomar_dano()
             if arana.vivo == False:
-                pygame.mixer.music.stop()
-                estado = 'game over'
+                tempo_congelado = True
+                arana.atualizar_animacao(6)
+                #estado = 'game over'
 
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
@@ -316,6 +407,7 @@ while True:
 
         #--------------------PERSONAGENS E ATAQUES---------------------------------
         arana.atualizar()
+        arana.atualizar_animacao()
         arana.desenhar(tela)
 
         bola1.atualizar_animacao()
@@ -349,10 +441,9 @@ while True:
                     estado_atual = estado_atacando
                     curupira.atualizar_acoes(1)
                     time_inicio_estado = time_atual
+                    tocar_som(grito_curupira)
 
             if estado_atual == estado_atacando:
-                grito_curupira.play()
-
                 if vilao_pos_atual == vilao_pos1:
                     
                     bola1.giro = False
@@ -393,27 +484,27 @@ while True:
         #-----------primeiro rato    ---------------------
         if time_atual - tempo_fase1 > 6000:
 
-            rato1.atualizar_animacao()
-            rato1.draw()
-            rato1.movimento()   
+            rato.atualizar_animacao()
+            rato.draw()
+            rato.movimento()   
             
-            if rato1.rect.x < -150 :   
-                rato1.direcao = "direita"
+            if rato.rect.x < -190 :   
+                rato.direcao = "direita"
 
-            elif rato1.rect.x > 1200: 
-                rato1.direcao = "esquerda"
+            elif rato.rect.x > 1450: 
+                rato.direcao = "esquerda"
 
         #---------------capivara ----------------------  
-        if time_atual - tempo_fase1 > 30000:
+        if time_atual - tempo_fase1 > 20000:
 
             capivara.atualizar_animacao()
             capivara.draw()
             capivara.movimento()
              
-            if capivara.rect.x < -150 :   
+            if capivara.rect.x < -630 :   
                 capivara.direcao = "direita"
 
-            elif capivara.rect.x > 1200: 
+            elif capivara.rect.x > 1600: 
                 capivara.direcao = "esquerda"
 
         #---------------------COLIZOES DOS PROJETEIS DO ARANA ------------------
@@ -449,7 +540,7 @@ while True:
             if event.type == QUIT:
                 pygame.quit()
                 exit()
-            if event.type == KEYDOWN:
+            if event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
                 pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
                 pygame.mixer.music.play(-1)
                 estado = "menu"

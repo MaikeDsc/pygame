@@ -2,11 +2,19 @@ import pygame
 
 class Balas:
     def __init__(self,x,y,direcao,tela):
+        pygame.sprite.Sprite.__init__(self)
         self.tela = tela
+        self.giro = False
+        self.dardo = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/dardo/dardo.png')
+        self.rect = self.dardo.get_rect()
+        self.rect.center = (x, y)
+        
+        
         if direcao == 1:
-            self.rect = pygame.Rect(x,y,40,2)
+            self.giro = True
         else:
-            self.rect = pygame.Rect(x - 80 ,y,40,2)
+            self.giro = False
+
         
         self.velocidade = 15 * direcao
     
@@ -14,4 +22,4 @@ class Balas:
         self.rect.x += self.velocidade
     
     def desenhar(self):
-        pygame.draw.rect(self.tela, (255,255,255),self.rect)
+        self.tela.blit(pygame.transform.flip(self.dardo, self.giro, False) ,self.rect)
