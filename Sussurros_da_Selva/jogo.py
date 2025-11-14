@@ -64,16 +64,17 @@ arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
 x_curupira = 1100
 y_curupira = 520
 
-bola1 = Magias('bola_de_fogo',1400, 300, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-rato = Inimigos('rato',-200, 610, 0.5, 7, 'direita', tela  )         
+rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela )         
 capivara = Inimigos('capivara', 1300, 589, 2.5, 6.5,'esquerda', tela)
 
 
 projeteis = []
 
 clock = pygame.time.Clock()
+
 
 BRANCO = (255,255,255)
 PRETO = (0,0,0)
@@ -87,8 +88,8 @@ def resetar_fase1():
     global tempo_obsoleto, tempo_lancando, time_inicio_estado
     global tempo_congelado
 
-    tempo_congelado = False
 
+    tempo_congelado = False
     tempo_fase1 = pygame.time.get_ticks()
 
     #recriar personagens
@@ -96,7 +97,7 @@ def resetar_fase1():
     curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
     curupira.vivo = True
 
-    bola1 = Magias('bola_de_fogo',1400, 200, 2.5, 10, tela )  
+    bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )  
     bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
     rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela  )         
@@ -360,10 +361,10 @@ while True:
             tela.blit(ponto_de_vida_nulo, (130,60))
             tela.blit(ponto_de_vida_nulo, (180,60))
 
-        if tempo_congelado == False:
-            tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
-        else:
+        if tempo_congelado == True:
             tempo_decorrido = tempo_decorrido
+        else:
+            tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
 
         tempo_restante = max(0, tempo_total - tempo_decorrido)
         
@@ -376,6 +377,9 @@ while True:
         tela.blit(texto_cronometro, (600, 110))
 
         if tempo_restante <= 0:
+            pygame.mixer.music.load(pathabs('musica e sons','trilha_sonora_game_over.mp3'))
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(-1)
             estado = "game over"
 
         #movimentos do jogo aqui embaixo
@@ -394,12 +398,23 @@ while True:
                         nova_bala = Balas(arana.rect.left, arana.rect.centery - 25, arana.direcao,tela)
                     projeteis.append(nova_bala)
 
-        if arana.rect.colliderect(bola1.rect) or arana.rect.colliderect(bola2.rect) or arana.rect.colliderect(rato.rect) or arana.rect.colliderect(capivara.rect):
-            arana.tomar_dano()
-            if arana.vivo == False:
-                tempo_congelado = True
-                arana.atualizar_animacao(6)
-                #estado = 'game over'
+        #----------------------COLISOES DO ARANA COM INIMIGOS---------------------------
+
+        rato_colisao = rato.rect.inflate(-45, -15)
+        bola1_colisao = bola1.rect.inflate(-50, -35)
+        bola2_colisao = bola2.rect.inflate(-50, -35)
+        capivara_colisao = capivara.rect.inflate(-60, -70)
+        arana_colisao = arana.rect.inflate(-45, -35)
+
+        if tempo_congelado == False:
+            if arana_colisao.colliderect(bola1_colisao) or arana_colisao.colliderect(bola2_colisao) or arana_colisao.colliderect(rato_colisao) or arana_colisao.colliderect(capivara_colisao):
+                arana.tomar_dano()
+                if arana.vivo == False:
+                    pygame.mixer.music.load(pathabs('musica e sons','trilha_sonora_game_over.mp3'))
+                    pygame.mixer.music.set_volume(1)
+                    pygame.mixer.music.play(-1)
+                    estado = 'game over'
+                
 
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
@@ -458,8 +473,8 @@ while True:
                         curupira.atualizar_acoes(0)
                         time_inicio_estado = time_atual
                      #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
-                        bola1.rect.x = 1300
-                        bola2.rect.x = 1300       
+                        bola1.rect.x = 1400
+                        bola2.rect.x = 1400       
                 
                 if vilao_pos_atual == vilao_pos2:
                    
@@ -478,6 +493,9 @@ while True:
                         #aqui tem q redefinir a posição da bola para ela poder aparecer novamente
                         bola1.rect.x = -150
                         bola2.rect.x = -150
+
+        elif curupira.vivo == False:
+            tempo_congelado = True
          
         #----------------------------- outros inimigos ------------------------
 
@@ -507,7 +525,7 @@ while True:
             elif capivara.rect.x > 1600: 
                 capivara.direcao = "esquerda"
 
-        #---------------------COLIZOES DOS PROJETEIS DO ARANA ------------------
+        #---------------------COLISOES DOS PROJETEIS DO ARANA ------------------
         for bala in projeteis:
             bala.atualizar()
             bala.desenhar()
@@ -523,18 +541,8 @@ while True:
 #------------------------------ GAME OVER ---------------------------------------------------------
 
     elif estado == "game over":
-        fonte_titulo = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 50)
-        fonte_texto = pygame.font.Font("Sussurros_da_Selva/fonte_de_texto/PressStart2P.ttf", 20)
-
-        texto_game_over = fonte_titulo.render("GAME OVER", True, (255,0,0) )
-        texto_voltar = fonte_texto.render("Toque em qualquer botao para voltar ao menu", True, BRANCO)
-
-        tela.fill(PRETO)
-
-        tela.blit(texto_game_over, (largura//2 - texto_game_over.get_width()//2, altura//3))
-        tela.blit(texto_voltar, (largura//2 - texto_voltar.get_width()//2, altura//2))
-
-        pygame.display.flip()
+        game_over = pygame.image.load(pathabs('imagens', 'fundo', 'game over.png'))
+        tela.blit(game_over, (0,0))
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -544,3 +552,6 @@ while True:
                 pygame.mixer.music.load("Sussurros_da_Selva/musica e sons/menu_sound.mp3")
                 pygame.mixer.music.play(-1)
                 estado = "menu"
+
+
+        pygame.display.flip()
