@@ -34,68 +34,41 @@ Sua missão é sobreviver às **três grandes lendas do folclore que estão corr
 - 🦋 **Estilo artístico desenhado à mão**, remetendo a animações retrô.  
 - 💀 **Dificuldade desafiadora**, exigindo reflexos e estratégia para sobreviver.
 
+<br>
+
 ---
+## **GUIA DE INSTALAÇÂO DE DEPEDENCIAS**
 
+<br>
+<div style="text-align: center">
+    <img src="https://www.gnu.org/graphics/heckert_gnu.transp.small.png">
+</div>
+<br>
 
-## Comandos basicos do git  
+### Windowns 🪟
+```cmd
+choco install make
+```
 
-git init
--> inicializar o GIT
+### Linux 🐧
+```bash
+sudo apt install make
+```
 
-git config --global user.name "nameuser" 
-git config --global user.gmail "name@gmail.com"  
- -> configuração do GIT
+## **PARA INICIAR O JOGO**
 
-git add .
-git arquivo.type 
- -> Adicionar o arquivo no Git 
+<br>
 
-git commit -m "mensagem"
- -> criar uma versão para o projeto atual com uma
- mensagem associada
+```shell
+cd pygame
+```
 
- git commit -ammend -m "mensagem"
- -> altera o ultimo commit
- -> Use quando esquece de Adicionar algo no ultimo commit
+```shell
+make build
+```
 
-git status 
- -> mostra o estado atual do repositório
+```shell
+make run
+```
 
-git log
- -> exibi o histórico dos commits
-
-git branch @Ramifiação@
- -> lista todas branchs
- -m renomeia o nome da branch atual
-
-git checkout 
- -> usada para acessar branch e commits pela hash
- -b criar e acessa uma nova branch
-
-git remote add origin https://github.com/username/nome-do-repositorio.git
- ou 
-git remote set-url origin https://username:token@github.com/username/nome-do-repositorio.git
- -> cria uma conexão remota com o repositório especificado
-git remote -v 
--> lista todos os repositorios vinculados ao seu projeto com suas URLs
-
-git push -u origin master
- -> envia a commit para o repositório do GitHub
- -u rastreia o repositorio remoto e torna padrão
- 
-git clone "url"
- -> clona o repositorio remoto para ambiente local 
-
-git pull origin main
--> baixa as mudanças feitas para repositorio atual
-
-git reset --hard <hash_do_commit_anterior>
--> apaga um commit
-
-git pull --rebase origin master
-(ja faz o trabalho do pull e fetch)
-
-vai atualizar o teu repositório local, caso eu ja tenha mexido algo.
-basta esse. depois pode dar add e commit
-(mas por cautela pode executar esse de --rebase novamente antes de dar push)
 
