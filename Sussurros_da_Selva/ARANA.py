@@ -1,5 +1,11 @@
 import pygame
 from pygame.locals import *
+import os
+
+def pathabs(*partes):
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual, *partes)
 
 class Arana:
     def __init__(self, nome,x,y, escala, chao_Y,largura,vida = 3):
@@ -35,35 +41,35 @@ class Arana:
 
         lista_temporaria = []
         for c in range(5):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_normal/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_normal/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
 
         lista_temporaria = []
         for c in range(4):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_correndo/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_correndo/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
 
         lista_temporaria = []
         for c in range(9):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_pulando/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_pulando/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
 
         lista_temporaria = []
         for c in range(3):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_atirando_parado/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_atirando_parado/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
         
         lista_temporaria = []
         for c in range(3):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_atirando_correndo/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_atirando_correndo/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
@@ -71,7 +77,7 @@ class Arana:
 
         lista_temporaria = []
         for c in range(6):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_atirando_pulando/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_atirando_pulando/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)
@@ -79,7 +85,7 @@ class Arana:
 
         lista_temporaria = []
         for c in range(6):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/arana_morrendo/{c}.png')
+            imagem = pygame.image.load(pathabs(f'imagens/arana/arana_morrendo/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             lista_temporaria.append(imagem)
         self.lista_animacoes.append(lista_temporaria)

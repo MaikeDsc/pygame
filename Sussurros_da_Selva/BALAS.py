@@ -1,11 +1,17 @@
 import pygame
+import os
+
+def pathabs2(*partes):
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual, *partes)
 
 class Balas:
     def __init__(self,x,y,direcao,tela):
         pygame.sprite.Sprite.__init__(self)
         self.tela = tela
         self.giro = False
-        self.dardo = pygame.image.load(f'Sussurros_da_Selva/imagens/arana/dardo/dardo.png')
+        self.dardo = pygame.image.load(pathabs2(f'imagens/arana/dardo/dardo.png'))
         self.rect = self.dardo.get_rect()
         self.rect.center = (x, y)
         

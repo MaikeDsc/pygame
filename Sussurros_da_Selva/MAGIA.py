@@ -1,11 +1,16 @@
-import pygame 
+import pygame
+import os 
 
 #essa clase é destinada as magias lançadas pelos bosses das fases, mas pode ser aproveitada caso arana queira lanar magia tabém
+def pathabs5(*partes):
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual, *partes)
 
 class Magias(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
+    def __init__(self, nome_pasta, x, y, escala, velocidade, tela, quant_sprites = 3):
         pygame.sprite.Sprite.__init__(self)
-        
+        self.quant_sprites = quant_sprites
         self.giro = False
         self.direcao = 0
         self.velocidade = velocidade
@@ -16,8 +21,8 @@ class Magias(pygame.sprite.Sprite):
         self.acao = 0
         self.tela = tela
 
-        for c in range (3):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/projeteis/{self.nome_pasta}/{c}.png')
+        for c in range (self.quant_sprites):
+            imagem = pygame.image.load(pathabs5(f'imagens/projeteis/{self.nome_pasta}/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)
 

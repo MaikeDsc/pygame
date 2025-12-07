@@ -1,7 +1,13 @@
-import pygame 
+import pygame
+import os 
 
 # essa clase é destinada a tudo, que não seja o jogador e que percorre a tela de um lado a outro
 #Como: Bolas de fogo, inimigos rastejantes e voadores outras magias dos bosses
+
+def pathabs3(*partes):
+    dir_atual = os.path.dirname(__file__)
+
+    return os.path.join(dir_atual, *partes)
 
 class Inimigos(pygame.sprite.Sprite):
     def __init__(self, nome_pasta, x, y, escala, velocidade, direcao,tela):
@@ -18,7 +24,7 @@ class Inimigos(pygame.sprite.Sprite):
         self.tela = tela
 
         for c in range (3):
-            imagem = pygame.image.load(f'Sussurros_da_Selva/imagens/projeteis/{self.nome_pasta}/{c}.png')
+            imagem = pygame.image.load(pathabs3(f'imagens/projeteis/{self.nome_pasta}/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)
 
