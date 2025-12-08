@@ -24,29 +24,29 @@ altura = 720
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load(pathabs4("imagens/fundo/cenario_1.png"))
+cenario_fase1 = pygame.image.load(pathabs4("images/fundo/cenario_1.png"))
 
-barra_vida_arana = pygame.image.load(pathabs4("imagens/hud/tronco/0.png"))
+barra_vida_arana = pygame.image.load(pathabs4("images/hud/tronco/0.png"))
 barra_vida_arana = pygame.transform.scale(barra_vida_arana, (300,200))
 
-ponto_de_vida = pygame.image.load(pathabs4("imagens/hud/folha/1.png"))
+ponto_de_vida = pygame.image.load(pathabs4("images/hud/folha/1.png"))
 ponto_de_vida = pygame.transform.scale(ponto_de_vida, (250,150))
 
-ponto_de_vida_nulo = pygame.image.load(pathabs4("imagens/hud/folha/0.png"))
+ponto_de_vida_nulo = pygame.image.load(pathabs4("images/hud/folha/0.png"))
 ponto_de_vida_nulo = pygame.transform.scale(ponto_de_vida_nulo, (250,150))
 
 #------------------------- Carregamento de sons ----------------------------------
 
-pygame.mixer.music.load(pathabs4("musica e sons/menu_sound.mp3"))
+pygame.mixer.music.load(pathabs4("assets/music/menu_sound.mp3"))
 pygame.mixer.music.play(-1)
 
-click = pygame.mixer.Sound(pathabs4("musica e sons/click.wav"))
+click = pygame.mixer.Sound(pathabs4("assets/sounds/click.wav"))
 click.set_volume(0.6)
 
-dardo = pygame.mixer.Sound(pathabs4("musica e sons/dardo.wav"))
+dardo = pygame.mixer.Sound(pathabs4("assets/sounds/dardo.wav"))
 dardo.set_volume(0.6)
 
-grito_curupira = pygame.mixer.Sound(pathabs4("musica e sons/gritos/grito_magia_fogo.wav"))
+grito_curupira = pygame.mixer.Sound(pathabs4("assets/gritos/grito_magia_fogo.wav"))
 grito_curupira.set_volume(0.15)
 
 def tocar_som(som):
@@ -64,7 +64,7 @@ arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
 x_curupira = 1100
 y_curupira = 520
 
-bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )   #parametros : nome pasta de imagens, pos x, po y, escala, velocidade
+bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )   #parametros : nome pasta de images, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
 rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela )         
@@ -132,7 +132,7 @@ def resetar_fase1():
     time_inicio_estado = tempo_fase1
 
 def intro():
-    pasta_frames = pathabs4('imagens','intro')
+    pasta_frames = pathabs4('images','intro')
     fps = 20
 
     frames = []
@@ -164,7 +164,7 @@ def intro():
         clock.tick(fps)
 
 def submenu():
-    pasta_frames = pathabs4('imagens','submenu')
+    pasta_frames = pathabs4('images','submenu')
     fps = 25
 
     frames = []
@@ -201,7 +201,7 @@ def submenu():
         clock.tick(fps)
 
 def menu():
-    pasta_frames = pathabs4('imagens','menu')
+    pasta_frames = pathabs4('images','menu')
     fps = 25
 
     frames = []
@@ -230,7 +230,7 @@ def menu():
             if event.type == MOUSEBUTTONDOWN:
                 if jogar.collidepoint(event.pos):
                     click.play()
-                    pygame.mixer.music.load(pathabs4("musica e sons/Nameless King.mp3"))
+                    pygame.mixer.music.load(pathabs4("assets/music/Nameless King.mp3"))
                     pygame.mixer.music.set_volume(0.5)
                     pygame.mixer.music.play(-1)
 
@@ -258,12 +258,12 @@ def menu():
         clock.tick(fps)
 
 def tutorial_1():
-    img = pygame.image.load(pathabs4('imagens', 'tutorial', '1.png'))
-    arana_correndo = pygame.image.load(pathabs4('imagens', 'arana', 'arana_correndo', '1.png'))
+    img = pygame.image.load(pathabs4('images', 'tutorial', '1.png'))
+    arana_correndo = pygame.image.load(pathabs4('images', 'arana', 'arana_correndo', '1.png'))
     arana_correndo = pygame.transform.scale(arana_correndo, (125,170))
-    arana_pulando = pygame.image.load(pathabs4('imagens', 'arana', 'arana_pulando', '3.png'))
+    arana_pulando = pygame.image.load(pathabs4('images', 'arana', 'arana_pulando', '3.png'))
     arana_pulando = pygame.transform.scale(arana_pulando, (125,163))
-    arana_atirando = pygame.image.load(pathabs4('imagens', 'arana', 'arana_atirando_parado', '0.png'))
+    arana_atirando = pygame.image.load(pathabs4('images', 'arana', 'arana_atirando_parado', '0.png'))
     arana_atirando = pygame.transform.scale(arana_atirando, (125,163))
 
 
@@ -296,7 +296,7 @@ def tutorial_1():
         pygame.display.flip()
 
 def tutorial_2():
-    img = pygame.image.load(pathabs4('imagens', 'tutorial', '2.png'))
+    img = pygame.image.load(pathabs4('images', 'tutorial', '2.png'))
     capivara_tutorial = Inimigos('capivara', largura/2 , altura/2 , 4, 0,'esquerda', tela)
 
     while True:
@@ -373,12 +373,12 @@ while True:
         segundos = int(tempo_restante % 60)
         texto_tempo = f"{minutos:02d}:{segundos:02d}"
 
-        fonte_cronometro = pygame.font.Font(pathabs4("fonte_de_texto/PressStart2P.ttf"), 35)
+        fonte_cronometro = pygame.font.Font(pathabs4("fonts/PressStart2P.ttf"), 35)
         texto_cronometro = fonte_cronometro.render(texto_tempo, True, (255,255,255))
         tela.blit(texto_cronometro, (600, 110))
 
         if tempo_restante <= 0:
-            pygame.mixer.music.load(pathabs4('musica e sons','trilha_sonora_game_over.mp3'))
+            pygame.mixer.music.load(pathabs4('assets/music','trilha_sonora_game_over.mp3'))
             pygame.mixer.music.set_volume(1)
             pygame.mixer.music.play(-1)
             estado = "game over"
@@ -411,7 +411,7 @@ while True:
             if arana_colisao.colliderect(bola1_colisao) or arana_colisao.colliderect(bola2_colisao) or arana_colisao.colliderect(rato_colisao) or arana_colisao.colliderect(capivara_colisao):
                 arana.tomar_dano()
                 if arana.vivo == False:
-                    pygame.mixer.music.load(pathabs4('musica e sons','trilha_sonora_game_over.mp3'))
+                    pygame.mixer.music.load(pathabs4('assets/music','trilha_sonora_game_over.mp3'))
                     pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.play(-1)
                     estado = 'game over'
@@ -545,7 +545,7 @@ while True:
 #------------------------------ GAME OVER ---------------------------------------------------------
 
     elif estado == "game over":
-        game_over = pygame.image.load(pathabs4('imagens', 'fundo', 'game over.png'))
+        game_over = pygame.image.load(pathabs4('images', 'fundo', 'game over.png'))
         tela.blit(game_over, (0,0))
 
         for event in pygame.event.get():
@@ -553,7 +553,7 @@ while True:
                 pygame.quit()
                 exit()
             if event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
-                pygame.mixer.music.load(pathabs4("musica e sons/menu_sound.mp3"))
+                pygame.mixer.music.load(pathabs4("assets/music/menu_sound.mp3"))
                 pygame.mixer.music.play(-1)
                 estado = "menu"
 

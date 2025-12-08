@@ -24,7 +24,7 @@ class Inimigos(pygame.sprite.Sprite):
         self.tela = tela
 
         for c in range (3):
-            imagem = pygame.image.load(pathabs3(f'imagens/projeteis/{self.nome_pasta}/{c}.png'))
+            imagem = pygame.image.load(pathabs3(f'images/projeteis/{self.nome_pasta}/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)
 

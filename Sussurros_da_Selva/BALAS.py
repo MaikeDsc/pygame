@@ -11,7 +11,7 @@ class Balas:
         pygame.sprite.Sprite.__init__(self)
         self.tela = tela
         self.giro = False
-        self.dardo = pygame.image.load(pathabs2(f'imagens/arana/dardo/dardo.png'))
+        self.dardo = pygame.image.load(pathabs2(f'images/arana/dardo/dardo.png'))
         self.rect = self.dardo.get_rect()
         self.rect.center = (x, y)
         
