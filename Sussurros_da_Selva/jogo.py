@@ -24,7 +24,7 @@ altura = 720
 tela = pygame.display.set_mode((largura,altura))
 pygame.display.set_caption("Sussuros da Selva")
 
-cenario_fase1 = pygame.image.load(pathabs4("images/fundo/cenario_1.png"))
+cenario_fase1 = pygame.image.load(pathabs4("images/fundo/background_chat.png"))
 
 barra_vida_arana = pygame.image.load(pathabs4("images/hud/tronco/0.png"))
 barra_vida_arana = pygame.transform.scale(barra_vida_arana, (300,200))
@@ -62,13 +62,13 @@ y_arana = 562
 arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
 
 x_curupira = 1100
-y_curupira = 520
+y_curupira = 523
 
 bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )   #parametros : nome pasta de images, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela )         
-capivara = Inimigos('capivara', 1300, 589, 2.5, 6.5,'esquerda', tela)
+rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela )         
+capivara = Inimigos('capivara', 1300, 592, 2.5, 6.5,'esquerda', tela)
 
 portal = Magias('portal1', (largura/2), (altura/2), 2.5, 10, tela)
 projeteis = []
@@ -99,8 +99,8 @@ def resetar_fase1():
     bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )  
     bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-    rato = Inimigos('rato',-200, 610, 0.4, 7, 'direita', tela  )         
-    capivara = Inimigos('capivara', 1300, 589, 2.5, 6.5,'esquerda', tela)
+    rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela  )         
+    capivara = Inimigos('capivara', 1300, 592, 2.5, 6.5,'esquerda', tela)
     
     portal = Magias('portal1',(largura/2), (altura/2), 3, 10, tela, 6)
 
@@ -323,7 +323,7 @@ def tutorial_2():
         capivara_tutorial.draw()
         pygame.display.flip()
 
-estado = "menu"
+estado = "intro"
 tempo_total = 90
 tempo_congelado = False
 
@@ -500,6 +500,15 @@ while True:
         elif curupira.vivo == False:
             tempo_congelado = True
             portal.draw()
+
+            portal_colisao  =  portal.rect.inflate(-100,-100)
+
+
+            if arana_colisao.colliderect(portal_colisao):
+                pygame.mixer.music.load(pathabs4('assets','music','trilha_sonora_de_vitoria2.mp3'))
+                pygame.mixer.music.set_volume(1)
+                pygame.mixer.music.play(-1)
+                estado = 'vitoria'
          
         #----------------------------- outros inimigos ------------------------
 
@@ -557,5 +566,20 @@ while True:
                 pygame.mixer.music.play(-1)
                 estado = "menu"
 
+    elif estado == 'vitoria':
+        sair = pygame.draw.rect(tela,'white',(1065,631,148,37))
+        vitoria = pygame.image.load(pathabs4('images', 'fundo', 'vitoria.png'))
+        tela.blit(vitoria, (0,0))
 
-        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+            elif event.type == MOUSEBUTTONDOWN:
+                if sair.collidepoint(event.pos):
+                    pygame.mixer.music.load(pathabs4("assets/music/menu_sound.mp3"))
+                    pygame.mixer.music.play(-1)
+                    estado = 'menu'
+
+    pygame.display.flip()

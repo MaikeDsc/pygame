@@ -7,7 +7,7 @@ def pathabs6(*partes):
     return os.path.join(dir_atual, *partes)
 
 class Vilao(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, tela, vida = 10):
+    def __init__(self, nome_pasta, x, y, escala, tela, vida = 100):
         
         pygame.sprite.Sprite.__init__(self)
         self.vida = vida
