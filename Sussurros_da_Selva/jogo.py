@@ -8,14 +8,15 @@ from MAGIA import *
 from INIMIGOS import *
 import os
 
-pygame.mixer.pre_init(44100, -16, 2, 128)
-pygame.init()
-pygame.mixer.set_num_channels(16)
 
 def pathabs4(*partes):
     dir_atual = os.path.dirname(__file__)
 
     return os.path.join(dir_atual, *partes)
+
+pygame.mixer.pre_init(44100, -16, 2, 128)
+pygame.init()
+pygame.mixer.set_num_channels(16)
 
 largura = 1280
 altura = 720
@@ -515,7 +516,7 @@ while True:
         if time_atual - tempo_fase1 > 6000:
 
             rato.atualizar_animacao()
-            rato.draw()
+            rato.desenhar()
             rato.movimento()
 
             if rato.rect.x < -190 :
@@ -528,7 +529,7 @@ while True:
         if time_atual - tempo_fase1 > 20000:
 
             capivara.atualizar_animacao()
-            capivara.draw()
+            capivara.desenhar()
             capivara.movimento()
 
             if capivara.rect.x < -630 :
