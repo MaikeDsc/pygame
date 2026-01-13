@@ -101,7 +101,7 @@ def resetar_fase1():
     rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela  )
     capivara = Inimigos('capivara', 1300, 592, 2.5, 6.5,'esquerda', tela)
 
-    portal = Magias('portal1',(largura/2), (altura/2), 3, 10, tela, 6)
+    portal = Magias('portal1',(largura/2), (altura/2), 3, 10, tela)
 
     projeteis = []
 

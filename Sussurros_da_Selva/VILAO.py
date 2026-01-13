@@ -32,7 +32,8 @@ class Vilao(pygame.sprite.Sprite):
                 imagem = pygame.image.load(pathabs6(f'images/{self.nome_pasta}/{sprite}/{cena}.png'))
                 imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
                 listemp.append(imagem)
-        self.lista_animacoes.append(listemp)
+        self.lista_animacoes.append(listemp.copy())
+        listemp.clear()
 
         self.img = self.lista_animacoes[self.acao][self.indice_frame]
         self.rect = self.img.get_rect()
