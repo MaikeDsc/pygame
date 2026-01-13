@@ -8,9 +8,7 @@ def pathabs5(*partes):
     return os.path.join(dir_atual, *partes)
 
 class Magias(pygame.sprite.Sprite):
-    def __init__(self, nome_pasta, x, y, escala, velocidade, tela, quant_sprites = 3):
-        pygame.sprite.Sprite.__init__(self)
-        self.quant_sprites = quant_sprites
+    def __init__(self, nome_pasta, x, y, escala, velocidade, tela):
         self.giro = False
         self.direcao = 0
         self.velocidade = velocidade
@@ -20,8 +18,12 @@ class Magias(pygame.sprite.Sprite):
         self.indice_frame = 0
         self.acao = 0
         self.tela = tela
+        self.carregar(escala,x,y)
 
-        for c in range (self.quant_sprites):
+    
+    def carregar(self,escala,x,y):
+
+        for c in range (3):
             imagem = pygame.image.load(pathabs5(f'images/projeteis/{self.nome_pasta}/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
             self.lista_animacoes.append(imagem)

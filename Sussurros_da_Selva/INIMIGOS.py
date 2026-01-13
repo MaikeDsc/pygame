@@ -22,7 +22,9 @@ class Inimigos(pygame.sprite.Sprite):
         self.indice_frame = 0
         self.acao = 0
         self.tela = tela
+        self.carregar(x,y,escala)
 
+    def carregar(self,x,y,escala):
         for c in range (3):
             imagem = pygame.image.load(pathabs3(f'images/projeteis/{self.nome_pasta}/{c}.png'))
             imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
@@ -59,7 +61,7 @@ class Inimigos(pygame.sprite.Sprite):
             self.giro = False 
 
 
-    def draw(self):
+    def desenhar(self):
         #self.tela.blit(self.img ,self.rect)
         self.tela.blit(pygame.transform.flip(self.img, self.giro, False) ,self.rect)
 

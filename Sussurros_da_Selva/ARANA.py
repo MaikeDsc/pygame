@@ -39,61 +39,34 @@ class Arana:
         self.tempo_inicio_tiro = 0
         self.duracao_tiro = 300
 
-        lista_temporaria = []
-        for c in range(5):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_normal/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+        self.carregar(escala,x,y)
 
-        lista_temporaria = []
-        for c in range(4):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_correndo/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+    def carregar(self,escala,x,y):
 
-        lista_temporaria = []
-        for c in range(9):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_pulando/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+        estados = [
+            ("arana_normal",5),
+            ("arana_correndo",4),
+            ("arana_pulando",9),
+            ("arana_atirando_parado",3),
+            ("arana_atirando_correndo",3),
+            ("arana_atirando_pulando",6),
+            ("arana_morrendo",6)
+        ]
+    
+        for sprint, cenas in estados:
+            listemp = list()
 
-        lista_temporaria = []
-        for c in range(3):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_atirando_parado/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
-        
-        lista_temporaria = []
-        for c in range(3):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_atirando_correndo/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
-
-
-        lista_temporaria = []
-        for c in range(6):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_atirando_pulando/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
-
-
-        lista_temporaria = []
-        for c in range(6):
-            imagem = pygame.image.load(pathabs(f'images/arana/arana_morrendo/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+            for cena in range(0,cenas):
+                imagem = pygame.image.load(pathabs(f'images/arana/{sprint}/{cena}.png'))
+                imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
+                listemp.append(imagem)
+            
+            self.lista_animacoes.append(listemp.copy())
+            listemp.clear()
 
         self.img = self.lista_animacoes[self.acao][self.indice_frame]                 #primeira imagem carregada, ou seja o presonagem começa com a imagem padrão
         self.rect = self.img.get_rect()
         self.rect.center = (x, y)
-
 
 
     def desenhar(self, tela):

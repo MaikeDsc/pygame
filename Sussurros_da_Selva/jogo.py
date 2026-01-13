@@ -17,7 +17,6 @@ def pathabs4(*partes):
 
     return os.path.join(dir_atual, *partes)
 
-
 largura = 1280
 altura = 720
 
@@ -46,7 +45,7 @@ click.set_volume(0.6)
 dardo = pygame.mixer.Sound(pathabs4("assets/sounds/dardo.wav"))
 dardo.set_volume(0.6)
 
-grito_curupira = pygame.mixer.Sound(pathabs4("assets/gritos/grito_magia_fogo.wav"))
+grito_curupira = pygame.mixer.Sound(pathabs4("assets/sounds/gritos/grito_magia_fogo.wav"))
 grito_curupira.set_volume(0.15)
 
 def tocar_som(som):
@@ -67,7 +66,7 @@ y_curupira = 523
 bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )   #parametros : nome pasta de images, pos x, po y, escala, velocidade
 bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela )         
+rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela )
 capivara = Inimigos('capivara', 1300, 592, 2.5, 6.5,'esquerda', tela)
 
 portal = Magias('portal1', (largura/2), (altura/2), 2.5, 10, tela)
@@ -96,12 +95,12 @@ def resetar_fase1():
     arana = Arana('Arana',x_arana,y_arana,2,chao_Y,largura, 3)
     curupira = Vilao('curupira', x_curupira, y_curupira, 1.7, tela)
 
-    bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )  
+    bola1 = Magias('bola_de_fogo',1400, 280, 2.5, 10, tela )
     bola2 = Magias('bola_de_fogo',1400, 590, 2.5, 10, tela )
 
-    rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela  )         
+    rato = Inimigos('rato',-200, 613, 0.4, 7, 'direita', tela  )
     capivara = Inimigos('capivara', 1300, 592, 2.5, 6.5,'esquerda', tela)
-    
+
     portal = Magias('portal1',(largura/2), (altura/2), 3, 10, tela, 6)
 
     projeteis = []
@@ -110,12 +109,12 @@ def resetar_fase1():
     vilao_xposicao_1 = 1000
     vilao_xposicao_2 = 20
 
-    #para usar no if  
+    #para usar no if
     vilao_pos1 = 0
     vilao_pos2 = 1
     vilao_pos_atual = vilao_pos1
 
-    #tempos do Vilão em cada posição ele começa na 1 
+    #tempos do Vilão em cada posição ele começa na 1
     tpos_vilao1 = 22800
     tpos_vilao2 = 22800
     time_inicio_posicao = tempo_fase1
@@ -125,8 +124,8 @@ def resetar_fase1():
     estado_atacando = 1
     estado_atual= estado_obsoleto
 
-    #setando os tempo dos ataques 
-    tempo_obsoleto = 3000    
+    #setando os tempo dos ataques
+    tempo_obsoleto = 3000
     tempo_lancando = 2400
 
     time_inicio_estado = tempo_fase1
@@ -160,7 +159,7 @@ def intro():
 
         if frame_index >= len(frames):
             return 'submenu'
-        
+
         clock.tick(fps)
 
 def submenu():
@@ -180,7 +179,7 @@ def submenu():
     frame_index = 0
 
     while True:
-        
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -197,7 +196,7 @@ def submenu():
 
         if frame_index >= len(frames):
             frame_index = 0
-        
+
         clock.tick(fps)
 
 def menu():
@@ -236,7 +235,7 @@ def menu():
 
                     resetar_fase1()
                     return 'fase 1'
-                
+
                 elif sair.collidepoint(event.pos):
                     click.play()
                     pygame.quit()
@@ -245,16 +244,16 @@ def menu():
                 elif tutorial_e_dicas.collidepoint(event.pos):
                     click.play()
                     return 'tutorial_1'
-                
+
         tela.blit(frames[frame_index], (0,0))
-        
+
         pygame.display.flip()
 
         frame_index += 1
 
         if frame_index >= len(frames):
             frame_index = 0
-        
+
         clock.tick(fps)
 
 def tutorial_1():
@@ -282,7 +281,7 @@ def tutorial_1():
                 if sair.collidepoint(event.pos):
                     click.play()
                     return 'menu'
-                
+
                 elif proximo.collidepoint(event.pos):
                     click.play()
                     return 'tutorial_2'
@@ -300,7 +299,7 @@ def tutorial_2():
     capivara_tutorial = Inimigos('capivara', largura/2 , altura/2 , 4, 0,'esquerda', tela)
 
     while True:
-        
+
         sair = pygame.draw.rect(tela,'white',(910,651,149,37))
         voltar = pygame.draw.rect(tela,'white',(1089,651,149,37))
 
@@ -313,7 +312,7 @@ def tutorial_2():
                 if sair.collidepoint(event.pos):
                     click.play()
                     return 'menu'
-                
+
                 elif voltar.collidepoint(event.pos):
                     click.play()
                     return 'tutorial_1'
@@ -339,13 +338,13 @@ while True:
 
     elif estado == 'tutorial_1':
         estado = tutorial_1()
-    
+
     elif estado == 'tutorial_2':
         estado = tutorial_2()
-                    
+
     elif estado == "fase 1":
-        
-        
+
+
         clock.tick(60)
         tela.blit(cenario_fase1, (0,0))
         tela.blit(barra_vida_arana, (90,30))
@@ -368,7 +367,7 @@ while True:
             tempo_decorrido = (pygame.time.get_ticks() - tempo_fase1) / 1000  # em segundos
 
         tempo_restante = max(0, tempo_total - tempo_decorrido)
-        
+
         minutos = int(tempo_restante // 60)
         segundos = int(tempo_restante % 60)
         texto_tempo = f"{minutos:02d}:{segundos:02d}"
@@ -415,7 +414,7 @@ while True:
                     pygame.mixer.music.set_volume(1)
                     pygame.mixer.music.play(-1)
                     estado = 'game over'
-                
+
 
         teclas = pygame.key.get_pressed()
         arana.movimento(teclas)
@@ -435,7 +434,7 @@ while True:
 
         #------------------- CURUPIRA -------------------------------------
 
-        time_atual = pygame.time.get_ticks() 
+        time_atual = pygame.time.get_ticks()
 
         if curupira.vivo == True:
 
@@ -445,8 +444,8 @@ while True:
                     curupira.rect.x = vilao_xposicao_2
                     vilao_pos_atual = vilao_pos2
                     time_inicio_posicao = time_atual
-            
-            if vilao_pos_atual == vilao_pos2:               #aqui volta para a posicao inicial 
+
+            if vilao_pos_atual == vilao_pos2:               #aqui volta para a posicao inicial
                 if time_atual - time_inicio_posicao >= tpos_vilao2:
                     curupira.giro = False
                     curupira.rect.x = vilao_xposicao_1
@@ -463,31 +462,31 @@ while True:
 
             if estado_atual == estado_atacando:
                 if vilao_pos_atual == vilao_pos1:
-                    
+
                     bola1.giro = False
                     bola2.giro = False
                     bola1.draw()
                     bola1.movimento(0)
                     bola2.draw()
                     bola2.movimento(0)
-                
+
                     if time_atual - time_inicio_estado >= tempo_lancando:
                         estado_atual = estado_obsoleto
                         curupira.atualizar_acoes(0)
                         time_inicio_estado = time_atual
                      #aqui tem q redefinir a posição da bola p poder ela aparecer novamente
                         bola1.rect.x = 1400
-                        bola2.rect.x = 1400       
-                
+                        bola2.rect.x = 1400
+
                 if vilao_pos_atual == vilao_pos2:
-                   
+
                     bola1.giro = True
                     bola2.giro = True
                     bola1.draw()
                     bola1.movimento(1)
                     bola2.draw()
                     bola2.movimento(1)
-                
+
                     if time_atual - time_inicio_estado >= tempo_lancando:
                         estado_atual = estado_obsoleto
                         curupira.atualizar_acoes(0)
@@ -509,7 +508,7 @@ while True:
                 pygame.mixer.music.set_volume(1)
                 pygame.mixer.music.play(-1)
                 estado = 'vitoria'
-         
+
         #----------------------------- outros inimigos ------------------------
 
         #-----------primeiro rato    ---------------------
@@ -517,25 +516,25 @@ while True:
 
             rato.atualizar_animacao()
             rato.draw()
-            rato.movimento()   
-            
-            if rato.rect.x < -190 :   
+            rato.movimento()
+
+            if rato.rect.x < -190 :
                 rato.direcao = "direita"
 
-            elif rato.rect.x > 1450: 
+            elif rato.rect.x > 1450:
                 rato.direcao = "esquerda"
 
-        #---------------capivara ----------------------  
+        #---------------capivara ----------------------
         if time_atual - tempo_fase1 > 20000:
 
             capivara.atualizar_animacao()
             capivara.draw()
             capivara.movimento()
-             
-            if capivara.rect.x < -630 :   
+
+            if capivara.rect.x < -630 :
                 capivara.direcao = "direita"
 
-            elif capivara.rect.x > 1600: 
+            elif capivara.rect.x > 1600:
                 capivara.direcao = "esquerda"
 
         #---------------------COLISOES DOS PROJETEIS DO ARANA ------------------

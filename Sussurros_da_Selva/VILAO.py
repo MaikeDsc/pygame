@@ -9,7 +9,6 @@ def pathabs6(*partes):
 class Vilao(pygame.sprite.Sprite):
     def __init__(self, nome_pasta, x, y, escala, tela, vida = 100):
         
-        pygame.sprite.Sprite.__init__(self)
         self.vida = vida
         self.vivo = True
         self.giro = False
@@ -19,23 +18,21 @@ class Vilao(pygame.sprite.Sprite):
         self.indice_frame = 0
         self.acao = 0
         self.tela = tela
-
         
-        #sprites obsoleto
-        lista_temporaria = []
-        for c in range (3):
-            imagem = pygame.image.load(pathabs6(f'images/{self.nome_pasta}/obsoleto/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+        estados = [
+            ("obsoleto",3),
+            ("lancar_magia",4)
+        ]
 
         #sprites dele lancando magia 
-        lista_temporaria = []
-        for c in range (4):
-            imagem = pygame.image.load(pathabs6(f'images/{self.nome_pasta}/lancar_magia/{c}.png'))
-            imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
-            lista_temporaria.append(imagem)
-        self.lista_animacoes.append(lista_temporaria)
+        listemp = list()
+        
+        for sprite,cenas in estados:
+            for cena in range(cenas):
+                imagem = pygame.image.load(pathabs6(f'images/{self.nome_pasta}/{sprite}/{cena}.png'))
+                imagem = pygame.transform.scale(imagem, (int(imagem.get_width() * escala), int(imagem.get_height() * escala)) )
+                listemp.append(imagem)
+        self.lista_animacoes.append(listemp)
 
         self.img = self.lista_animacoes[self.acao][self.indice_frame]
         self.rect = self.img.get_rect()

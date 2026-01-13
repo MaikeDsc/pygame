@@ -6,9 +6,8 @@ def pathabs2(*partes):
 
     return os.path.join(dir_atual, *partes)
 
-class Balas:
+class Balas(pygame.sprite.Sprite):
     def __init__(self,x,y,direcao,tela):
-        pygame.sprite.Sprite.__init__(self)
         self.tela = tela
         self.giro = False
         self.dardo = pygame.image.load(pathabs2(f'images/arana/dardo/dardo.png'))
