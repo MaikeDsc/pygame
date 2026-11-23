@@ -13,7 +13,7 @@ O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **
         <li>-👾**Deyvison Rolim Sousa** https://github.com/deyvisonPOSNIAK</li>  
         <li>-👾**Maquiavel dos Santos Campos** https://github.com/MaikeDsc</li>
         <li>-👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck</li>
-        <li>-👾**Luiz Guilherme Barreto** https://github.com/luizguilherme-barreto18</li>
+    
     </ul>
 </body>
 
