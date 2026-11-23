@@ -14,7 +14,6 @@ O jogador embarca em uma jornada pela misteriosa selva amazonica, enfrentando **
         <li>-👾**Maquiavel dos Santos Campos** https://github.com/MaikeDsc</li>
         <li>-👾**Daniel Sant'Anna de Araujo**  https://github.com/Sann1ck</li>
     
-    </ul>
 </body>
 
 ---
